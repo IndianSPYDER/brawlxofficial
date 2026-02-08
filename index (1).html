@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRAWL X - Street Fighter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #00ffff;
+            --neon-magenta: #ff00ff;
+            --neon-yellow: #ffff00;
+            --dark-bg: #0a0a0a;
+            --grid-color: #1a1a2e;
+            --damage-red: #ff0040;
+            --health-green: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: var(--dark-bg);
+            color: var(--neon-cyan);
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Login/Signup Screen */
+        #auth-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(ellipse at center, rgba(0,255,255,0.1) 0%, rgba(0,0,0,0.95) 100%);
+            z-index: 1000;
+        }
+
+        .auth-container {
+            background: rgba(0,0,0,0.9);
+            border: 3px solid var(--neon-cyan);
+            padding: 3rem 4rem;
+            min-width: 400px;
+            box-shadow: 0 0 50px rgba(0,255,255,0.3);
+        }
+
+        .auth-container h2 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--neon-cyan);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--neon-magenta);
+            box-shadow: 0 0 15px rgba(255,0,255,0.5);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 1rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            background: transparent;
+            color: var(--neon-magenta);
+            border: 2px solid var(--neon-magenta);
+            cursor: pointer;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            transition: all 0.3s;
+        }
+
+        .auth-btn:hover {
+            background: var(--neon-magenta);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-magenta);
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
+        }
+
+        .auth-toggle a {
+            color: var(--neon-magenta);
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .auth-toggle a:hover {
+            text-shadow: 0 0 10px var(--neon-magenta);
+        }
+
+        .welcome-user {
+            position: fixed;
+            top: 50px;
+            right: 30px;
+            color: var(--neon-cyan);
+            font-size: 1rem;
+            z-index: 500;
+            display: none;
+            background: rgba(0,0,0,0.8);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--neon-cyan);
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 0.3rem 0.8rem;
+            margin-left: 1rem;
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+        }
+
+        .error-msg {
+            color: var(--damage-red);
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* Animated grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridScroll 20s linear infinite;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        @keyframes gridScroll {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        #game-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Title Screen */
+        #title-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(ellipse at center, rgba(255,0,255,0.1) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: 100;
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        h1 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 8rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta), var(--neon-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0,255,255,0.5), 0 0 60px rgba(255,0,255,0.3);
+            animation: titleGlitch 3s ease-in-out infinite;
+            letter-spacing: 0.2rem;
+        }
+
+        @keyframes titleGlitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-3px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, 1px); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.5rem;
+            margin-top: 1rem;
+            animation: flicker 2s linear infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        #start-btn {
+            margin-top: 3rem;
+            padding: 1.5rem 4rem;
+            font-family: 'Black Ops One', cursive;
+            font-size: 2rem;
+            background: transparent;
+            color: var(--neon-magenta);
+            border: 3px solid var(--neon-magenta);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.3rem;
+        }
+
+        #start-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--neon-magenta);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            z-index: -1;
+        }
+
+        #start-btn:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        #start-btn:hover {
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-magenta), 0 0 40px var(--neon-magenta);
+            transform: scale(1.05);
+        }
+
+        #coming-soon-btn {
+            margin-top: 1.5rem;
+            padding: 1rem 3rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+        }
+
+        #coming-soon-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-cyan);
+            transform: scale(1.05);
+        }
+
+        #admin-btn {
+            margin-top: 1.5rem;
+            padding: 0.8rem 2.5rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            background: transparent;
+            color: var(--damage-red);
+            border: 2px solid var(--damage-red);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+        }
+
+        #admin-btn:hover {
+            background: var(--damage-red);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--damage-red);
+            transform: scale(1.05);
+        }
+
+        /* Coming Soon Modal */
+        #coming-soon-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: rgba(0,0,0,0.95);
+            border: 3px solid var(--neon-cyan);
+            padding: 3rem 4rem;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 50px rgba(0,255,255,0.5);
+            position: relative;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--neon-cyan);
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-magenta);
+            box-shadow: 0 0 10px var(--neon-magenta);
+        }
+
+        .modal-content h2 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,255,255,0.2);
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            color: var(--neon-magenta);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .feature-desc {
+            color: var(--neon-cyan);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .feature-date {
+            color: var(--neon-yellow);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: 2px solid var(--damage-red);
+            color: var(--damage-red);
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 2rem;
+            line-height: 1;
+            transition: all 0.3s;
+            font-weight: 900;
+        }
+
+        .close-modal:hover {
+            background: var(--damage-red);
+            color: var(--dark-bg);
+            transform: rotate(90deg);
+        }
+
+        /* HUD */
+        #hud {
+            display: none;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hud-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+
+        .player-hud {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .player-name {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+        }
+
+        .health-bar-container {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--neon-cyan);
+            padding: 0.5rem;
+            border-radius: 0;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,255,255,0.2);
+            width: 100%;
+        }
+
+        .health-bar {
+            height: 30px;
+            background: linear-gradient(90deg, var(--health-green), var(--neon-yellow), var(--damage-red));
+            transition: width 0.3s ease;
+            position: relative;
+            box-shadow: 0 0 10px var(--health-green);
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .health-bar.reverse {
+            background: linear-gradient(90deg, var(--damage-red), var(--neon-yellow), var(--health-green));
+        }
+
+        .health-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 50%, rgba(0,0,0,0.3) 100%);
+        }
+
+        #timer {
+            position: absolute;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 20px var(--neon-yellow);
+            animation: timerPulse 1s ease-in-out infinite;
+        }
+
+        #leave-btn {
+            position: absolute;
+            top: 8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 2rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--damage-red);
+            border: 2px solid var(--damage-red);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            z-index: 100;
+        }
+
+        #leave-btn:hover {
+            background: var(--damage-red);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--damage-red);
+        }
+
+        @keyframes timerPulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        /* Arena */
+        #arena {
+            flex: 1;
+            position: relative;
+            display: none;
+            overflow: hidden;
+        }
+
+        #arena::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta), var(--neon-cyan));
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .fighter {
+            position: absolute;
+            bottom: 100px;
+            width: 80px;
+            height: 120px;
+            transition: all 0.1s linear;
+        }
+
+        #player1 {
+            left: 100px;
+        }
+
+        #player2 {
+            right: 100px;
+        }
+
+        .fighter-body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        /* Fighter shapes */
+        .head {
+            width: 30px;
+            height: 30px;
+            background: currentColor;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+        }
+
+        .torso {
+            width: 40px;
+            height: 50px;
+            background: currentColor;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 30px;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+        }
+
+        .arm {
+            width: 15px;
+            height: 40px;
+            background: currentColor;
+            position: absolute;
+            top: 35px;
+        }
+
+        .arm-left {
+            left: 10px;
+            transform-origin: top center;
+        }
+
+        .arm-right {
+            right: 10px;
+            transform-origin: top center;
+        }
+
+        .leg {
+            width: 18px;
+            height: 45px;
+            background: currentColor;
+            position: absolute;
+            top: 75px;
+        }
+
+        .leg-left {
+            left: 20px;
+        }
+
+        .leg-right {
+            right: 20px;
+        }
+
+        /* Punching animation */
+        .punching .arm-right {
+            animation: punch 0.2s ease-out;
+        }
+
+        @keyframes punch {
+            0% { transform: rotate(0deg) translateX(0); }
+            50% { transform: rotate(-20deg) translateX(15px); }
+            100% { transform: rotate(0deg) translateX(0); }
+        }
+
+        /* Kicking animation */
+        .kicking .leg-right {
+            animation: kick 0.3s ease-out;
+        }
+
+        @keyframes kick {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(45deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Blocking animation */
+        .blocking {
+            filter: brightness(1.5) drop-shadow(0 0 15px currentColor);
+        }
+
+        /* Jumping animation */
+        .jumping {
+            animation: jump 0.5s ease-in-out;
+        }
+
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-100px); }
+        }
+
+        /* Hit effect */
+        .hit {
+            animation: hitFlash 0.2s;
+        }
+
+        @keyframes hitFlash {
+            0%, 100% { filter: brightness(1) drop-shadow(0 0 10px currentColor); }
+            50% { filter: brightness(3) drop-shadow(0 0 30px var(--damage-red)); }
+        }
+
+        /* Particle effects */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFade 0.5s ease-out forwards;
+        }
+
+        @keyframes particleFade {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+
+        /* Controls display */
+        #controls {
+            position: fixed;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.95);
+            border: 3px solid var(--neon-yellow);
+            padding: 2rem 4rem;
+            display: none;
+            gap: 5rem;
+            box-shadow: 0 0 40px rgba(255,255,0,0.4), inset 0 0 20px rgba(255,255,0,0.1);
+            z-index: 50;
+        }
+
+        #close-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: 2px solid var(--damage-red);
+            color: var(--damage-red);
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+            transition: all 0.3s;
+            font-weight: 900;
+        }
+
+        #close-controls:hover {
+            background: var(--damage-red);
+            color: var(--dark-bg);
+            transform: rotate(90deg);
+        }
+
+        .control-group {
+            text-align: center;
+            min-width: 250px;
+        }
+
+        .control-group h3 {
+            color: var(--neon-yellow);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            text-shadow: 0 0 10px var(--neon-yellow);
+            font-weight: 900;
+        }
+
+        .control-group p {
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            line-height: 2.2;
+            font-weight: 700;
+        }
+
+        .control-key {
+            display: inline-block;
+            background: var(--neon-magenta);
+            color: var(--dark-bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 900;
+            margin: 0 0.2rem;
+            font-size: 0.9rem;
+            box-shadow: 0 0 8px var(--neon-magenta);
+        }
+
+        /* Game Over */
+        #game-over {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.95);
+            border: 3px solid var(--neon-magenta);
+            padding: 3rem 5rem;
+            text-align: center;
+            display: none;
+            z-index: 200;
+            box-shadow: 0 0 50px rgba(255,0,255,0.5);
+        }
+
+        #game-over h2 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 4rem;
+            color: var(--neon-yellow);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px var(--neon-yellow);
+        }
+
+        #winner-text {
+            font-size: 2rem;
+            color: var(--neon-cyan);
+            margin-bottom: 2rem;
+        }
+
+        #restart-btn {
+            padding: 1rem 3rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            background: transparent;
+            color: var(--neon-magenta);
+            border: 2px solid var(--neon-magenta);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        #restart-btn:hover {
+            background: var(--neon-magenta);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-magenta);
+        }
+
+        /* Combo counter */
+        .combo {
+            position: absolute;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 20px var(--neon-yellow);
+            animation: comboPopup 0.5s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes comboPopup {
+            0% {
+                transform: scale(0) rotate(-10deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.3) rotate(5deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        /* Global Message Banner */
+        #global-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(255,0,255,0.95), rgba(0,255,255,0.95));
+            color: var(--dark-bg);
+            text-align: center;
+            padding: 1.5rem 2rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            z-index: 9999;
+            display: none;
+            box-shadow: 0 5px 30px rgba(255,0,255,0.6);
+            animation: slideDown 0.5s ease-out;
+            font-family: 'Black Ops One', cursive;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #global-message.fade-out {
+            animation: fadeOut 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+        }
+
+        /* Admin Console Modal */
+        #admin-console-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            animation: fadeIn 0.3s;
+        }
+
+        .admin-console-content {
+            background: rgba(0,0,0,0.98);
+            border: 3px solid var(--neon-yellow);
+            padding: 3rem 4rem;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 0 60px rgba(255,255,0,0.6);
+            position: relative;
+        }
+
+        .admin-console-content h2 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 20px var(--neon-yellow);
+        }
+
+        #admin-password-section {
+            display: block;
+        }
+
+        #admin-console-section {
+            display: none;
+        }
+
+        .admin-input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-input-group label {
+            display: block;
+            color: var(--neon-yellow);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+        }
+
+        .admin-input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0,0,0,0.7);
+            border: 2px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .admin-input-group input:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0,255,255,0.5);
+        }
+
+        .admin-console-output {
+            background: rgba(0,0,0,0.7);
+            border: 2px solid var(--neon-cyan);
+            padding: 1rem;
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+            font-family: 'Courier New', monospace;
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .admin-console-output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .admin-console-output::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.5);
+        }
+
+        .admin-console-output::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .console-line {
+            margin-bottom: 0.3rem;
+        }
+
+        .console-line.success {
+            color: var(--health-green);
+        }
+
+        .console-line.error {
+            color: var(--damage-red);
+        }
+
+        .console-line.info {
+            color: var(--neon-cyan);
+        }
+
+        .admin-btn-submit {
+            width: 100%;
+            padding: 1rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            background: transparent;
+            color: var(--neon-yellow);
+            border: 2px solid var(--neon-yellow);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .admin-btn-submit:hover {
+            background: var(--neon-yellow);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-yellow);
+        }
+
+        .admin-error {
+            color: var(--damage-red);
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .admin-commands-help {
+            background: rgba(0,255,255,0.1);
+            border: 1px solid var(--neon-cyan);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+            line-height: 1.8;
+        }
+
+        .admin-commands-help strong {
+            color: var(--neon-yellow);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login/Signup Screen -->
+    <div id="auth-screen">
+        <div class="auth-container">
+            <h2 id="auth-title">LOGIN</h2>
+            <form id="auth-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required autocomplete="current-password">
+                </div>
+                <div class="error-msg" id="error-msg"></div>
+                <button type="submit" class="auth-btn" id="auth-submit">Login</button>
+            </form>
+            <div class="auth-toggle">
+                <span id="toggle-text">Don't have an account? </span>
+                <a id="toggle-link">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Coming Soon Modal -->
+    <div id="coming-soon-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">×</button>
+            <h2>COMING SOON</h2>
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <div class="feature-title">🔧 MAJOR GLITCH FIXES</div>
+                    <div class="feature-desc">Comprehensive bug fixes and performance improvements for smoother gameplay</div>
+                    <div class="feature-date">Expected: End of February 2026</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-title">🎮 Multiplayer Mode</div>
+                    <div class="feature-desc">Battle your friends online in real-time PvP matches with ranked leaderboards</div>
+                    <div class="feature-date">Expected: March 2026</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-title">⚔️ New Fighters</div>
+                    <div class="feature-desc">Unlock 10+ unique fighters, each with special moves and abilities</div>
+                    <div class="feature-date">Expected: April 2026</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-title">🏆 Tournament Mode</div>
+                    <div class="feature-desc">Compete in 8-fighter tournaments with prize rewards and achievements</div>
+                    <div class="feature-date">Expected: May 2026</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-title">🌍 New Arenas</div>
+                    <div class="feature-desc">Fight in diverse locations: Rooftop, Cyber Dojo, Neon City, Space Station</div>
+                    <div class="feature-date">Expected: June 2026</div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-title">💪 Power-Ups & Special Moves</div>
+                    <div class="feature-desc">Collect power-ups during matches and unleash devastating combo attacks</div>
+                    <div class="feature-date">Expected: July 2026</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Admin Console Modal -->
+    <div id="admin-console-modal">
+        <div class="admin-console-content">
+            <button class="close-modal" id="close-admin-modal">×</button>
+            <h2>ADMIN CONSOLE</h2>
+            
+            <!-- Password Entry Section -->
+            <div id="admin-password-section">
+                <div class="admin-input-group">
+                    <label for="admin-password">Enter Access Code</label>
+                    <input type="password" id="admin-password" placeholder="****" autocomplete="off">
+                </div>
+                <div class="admin-error" id="admin-password-error">Invalid access code</div>
+                <button class="admin-btn-submit" id="admin-password-submit">Access Console</button>
+            </div>
+
+            <!-- Console Section -->
+            <div id="admin-console-section">
+                <div class="admin-commands-help">
+                    <strong>Available Commands:</strong><br>
+                    • <strong>global_message [message]</strong> - Send a global message to all players<br>
+                    • <strong>help</strong> - Show this help menu<br>
+                    • <strong>clear</strong> - Clear console output
+                </div>
+                
+                <div class="admin-console-output" id="admin-console-output">
+                    <div class="console-line info">Admin Console initialized...</div>
+                    <div class="console-line info">Type 'help' for available commands.</div>
+                </div>
+
+                <div class="admin-input-group">
+                    <label for="admin-command-input">Command Input</label>
+                    <input type="text" id="admin-command-input" placeholder="Enter command..." autocomplete="off">
+                </div>
+                
+                <button class="admin-btn-submit" id="admin-command-submit">Execute</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="welcome-user" id="welcome-user">
+        Welcome, <span id="current-user"></span>
+        <button class="logout-btn" id="logout-btn">Logout</button>
+    </div>
+
+    <!-- Global Message Banner -->
+    <div id="global-message"></div>
+
+    <div id="game-container">
+        <!-- Title Screen -->
+        <div id="title-screen">
+            <h1>BRAWL X</h1>
+            <div class="subtitle">Ultimate Street Fighter</div>
+            <button id="start-btn">Start Fight</button>
+            <button id="coming-soon-btn">What's Coming</button>
+            <button id="admin-btn">Admin Commands</button>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-top">
+                <div class="player-hud">
+                    <div class="player-name" style="color: var(--neon-cyan);">PLAYER 1</div>
+                    <div class="health-bar-container">
+                        <div class="health-bar" id="p1-health" style="width: 100%;"></div>
+                    </div>
+                </div>
+                <div class="player-hud" style="align-items: flex-end;">
+                    <div class="player-name" style="color: var(--neon-magenta);">AI OPPONENT</div>
+                    <div class="health-bar-container">
+                        <div class="health-bar reverse" id="p2-health" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="timer">99</div>
+            <button id="leave-btn">Leave Match</button>
+        </div>
+
+        <!-- Arena -->
+        <div id="arena">
+            <div id="player1" class="fighter" style="color: var(--neon-cyan);">
+                <div class="fighter-body">
+                    <div class="head"></div>
+                    <div class="torso"></div>
+                    <div class="arm arm-left"></div>
+                    <div class="arm arm-right"></div>
+                    <div class="leg leg-left"></div>
+                    <div class="leg leg-right"></div>
+                </div>
+            </div>
+            <div id="player2" class="fighter" style="color: var(--neon-magenta);">
+                <div class="fighter-body">
+                    <div class="head"></div>
+                    <div class="torso"></div>
+                    <div class="arm arm-left"></div>
+                    <div class="arm arm-right"></div>
+                    <div class="leg leg-left"></div>
+                    <div class="leg leg-right"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div id="controls">
+            <button id="close-controls">×</button>
+            <div class="control-group">
+                <h3>PLAYER 1</h3>
+                <p>
+                    <span class="control-key">↑</span><span class="control-key">←</span><span class="control-key">↓</span><span class="control-key">→</span> Move<br>
+                    <span class="control-key">↑</span> Jump<br>
+                    <span class="control-key">SPACE</span> Punch<br>
+                    <span class="control-key">CTRL</span> Kick<br>
+                    <span class="control-key">SHIFT</span> Block
+                </p>
+            </div>
+            <div class="control-group">
+                <h3>AI OPPONENT</h3>
+                <p style="color: var(--neon-magenta);">
+                    The AI will automatically<br>
+                    move, attack, and defend.<br>
+                    <br>
+                    Defeat the AI to win!
+                </p>
+            </div>
+        </div>
+
+        <!-- Game Over -->
+        <div id="game-over">
+            <h2>K.O.!</h2>
+            <div id="winner-text"></div>
+            <button id="restart-btn">Main Menu</button>
+        </div>
+    </div>
+
+    <script>
+        // Authentication System
+        let currentUser = null;
+        let isLoginMode = true;
+
+        const authScreen = document.getElementById('auth-screen');
+        const authForm = document.getElementById('auth-form');
+        const authTitle = document.getElementById('auth-title');
+        const authSubmit = document.getElementById('auth-submit');
+        const toggleLink = document.getElementById('toggle-link');
+        const toggleText = document.getElementById('toggle-text');
+        const errorMsg = document.getElementById('error-msg');
+        const welcomeUser = document.getElementById('welcome-user');
+        const currentUserSpan = document.getElementById('current-user');
+        const logoutBtn = document.getElementById('logout-btn');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+
+        // Global Message System
+        const globalMessageBanner = document.getElementById('global-message');
+        let globalMessageTimeout = null;
+
+        function showGlobalMessage(message) {
+            // Clear any existing timeout
+            if (globalMessageTimeout) {
+                clearTimeout(globalMessageTimeout);
+            }
+
+            // Remove fade-out class if it exists
+            globalMessageBanner.classList.remove('fade-out');
+            
+            // Set message with dev signature and show
+            globalMessageBanner.textContent = message + ' - The Dev';
+            globalMessageBanner.style.display = 'block';
+
+            // Auto-hide after 3 seconds with fade out animation
+            globalMessageTimeout = setTimeout(() => {
+                globalMessageBanner.classList.add('fade-out');
+                
+                // Actually hide after animation completes
+                setTimeout(() => {
+                    globalMessageBanner.style.display = 'none';
+                    globalMessageBanner.classList.remove('fade-out');
+                }, 500); // Match animation duration
+            }, 3000); // Show for 3 seconds
+        }
+
+        // Coming Soon Modal
+        const comingSoonBtn = document.getElementById('coming-soon-btn');
+        const comingSoonModal = document.getElementById('coming-soon-modal');
+        const closeModal = document.getElementById('close-modal');
+
+        comingSoonBtn.addEventListener('click', () => {
+            comingSoonModal.style.display = 'flex';
+        });
+
+        closeModal.addEventListener('click', () => {
+            comingSoonModal.style.display = 'none';
+        });
+
+        comingSoonModal.addEventListener('click', (e) => {
+            if (e.target === comingSoonModal) {
+                comingSoonModal.style.display = 'none';
+            }
+        });
+
+        // Admin Console Modal
+        const adminBtn = document.getElementById('admin-btn');
+        const adminConsoleModal = document.getElementById('admin-console-modal');
+        const closeAdminModal = document.getElementById('close-admin-modal');
+        const adminPasswordSection = document.getElementById('admin-password-section');
+        const adminConsoleSection = document.getElementById('admin-console-section');
+        const adminPasswordInput = document.getElementById('admin-password');
+        const adminPasswordSubmit = document.getElementById('admin-password-submit');
+        const adminPasswordError = document.getElementById('admin-password-error');
+        const adminCommandInput = document.getElementById('admin-command-input');
+        const adminCommandSubmit = document.getElementById('admin-command-submit');
+        const adminConsoleOutput = document.getElementById('admin-console-output');
+
+        const ADMIN_CODE = '67';
+        let adminAuthenticated = false;
+
+        adminBtn.addEventListener('click', () => {
+            adminConsoleModal.style.display = 'flex';
+            adminPasswordInput.value = '';
+            adminPasswordError.style.display = 'none';
+            if (!adminAuthenticated) {
+                adminPasswordSection.style.display = 'block';
+                adminConsoleSection.style.display = 'none';
+            } else {
+                adminPasswordSection.style.display = 'none';
+                adminConsoleSection.style.display = 'block';
+            }
+        });
+
+        closeAdminModal.addEventListener('click', () => {
+            adminConsoleModal.style.display = 'none';
+        });
+
+        adminConsoleModal.addEventListener('click', (e) => {
+            if (e.target === adminConsoleModal) {
+                adminConsoleModal.style.display = 'none';
+            }
+        });
+
+        // Password submission
+        adminPasswordSubmit.addEventListener('click', verifyAdminPassword);
+        adminPasswordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                verifyAdminPassword();
+            }
+        });
+
+        function verifyAdminPassword() {
+            const password = adminPasswordInput.value.trim();
+            if (password === ADMIN_CODE) {
+                adminAuthenticated = true;
+                adminPasswordSection.style.display = 'none';
+                adminConsoleSection.style.display = 'block';
+                adminPasswordError.style.display = 'none';
+                addConsoleMessage('Access granted. Welcome, Administrator.', 'success');
+                adminCommandInput.focus();
+            } else {
+                adminPasswordError.style.display = 'block';
+                adminPasswordInput.value = '';
+            }
+        }
+
+        // Command submission
+        adminCommandSubmit.addEventListener('click', executeAdminCommand);
+        adminCommandInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                executeAdminCommand();
+            }
+        });
+
+        function executeAdminCommand() {
+            const command = adminCommandInput.value.trim();
+            if (!command) return;
+
+            addConsoleMessage('> ' + command, 'info');
+            adminCommandInput.value = '';
+
+            // Parse command
+            const parts = command.split(' ');
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1).join(' ');
+
+            switch(cmd) {
+                case 'global_message':
+                    if (args.length > 0) {
+                        showGlobalMessage(args);
+                        addConsoleMessage('Global message sent: "' + args + '"', 'success');
+                    } else {
+                        addConsoleMessage('Error: Message text required. Usage: global_message [message]', 'error');
+                    }
+                    break;
+
+                case 'help':
+                    addConsoleMessage('Available Commands:', 'info');
+                    addConsoleMessage('  • global_message [message] - Send a global message', 'info');
+                    addConsoleMessage('  • help - Show this help menu', 'info');
+                    addConsoleMessage('  • clear - Clear console output', 'info');
+                    break;
+
+                case 'clear':
+                    adminConsoleOutput.innerHTML = '<div class="console-line info">Console cleared.</div>';
+                    break;
+
+                default:
+                    addConsoleMessage('Unknown command: "' + cmd + '". Type "help" for available commands.', 'error');
+            }
+
+            // Auto-scroll to bottom
+            adminConsoleOutput.scrollTop = adminConsoleOutput.scrollHeight;
+        }
+
+        function addConsoleMessage(message, type = 'info') {
+            const line = document.createElement('div');
+            line.className = 'console-line ' + type;
+            line.textContent = message;
+            adminConsoleOutput.appendChild(line);
+        }
+
+        // Check if user is already logged in
+        window.addEventListener('load', () => {
+            const savedUser = localStorage.getItem('brawlx_current_user');
+            if (savedUser) {
+                currentUser = savedUser;
+                showGame();
+            }
+        });
+
+        // Toggle between login and signup
+        toggleLink.addEventListener('click', () => {
+            isLoginMode = !isLoginMode;
+            if (isLoginMode) {
+                authTitle.textContent = 'LOGIN';
+                authSubmit.textContent = 'Login';
+                toggleText.textContent = "Don't have an account? ";
+                toggleLink.textContent = 'Sign Up';
+            } else {
+                authTitle.textContent = 'SIGN UP';
+                authSubmit.textContent = 'Sign Up';
+                toggleText.textContent = 'Already have an account? ';
+                toggleLink.textContent = 'Login';
+            }
+            errorMsg.style.display = 'none';
+            usernameInput.value = '';
+            passwordInput.value = '';
+        });
+
+        // Handle form submission
+        authForm.addEventListener('submit', handleAuth);
+        authSubmit.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleAuth(e);
+        });
+
+        function handleAuth(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+
+            if (username.length < 3) {
+                showError('Username must be at least 3 characters');
+                return false;
+            }
+
+            if (password.length < 4) {
+                showError('Password must be at least 4 characters');
+                return false;
+            }
+
+            if (isLoginMode) {
+                // Login
+                const users = JSON.parse(localStorage.getItem('brawlx_users') || '{}');
+                if (users[username] && users[username] === password) {
+                    currentUser = username;
+                    localStorage.setItem('brawlx_current_user', username);
+                    showGame();
+                } else {
+                    showError('Invalid username or password');
+                }
+            } else {
+                // Sign up
+                const users = JSON.parse(localStorage.getItem('brawlx_users') || '{}');
+                if (users[username]) {
+                    showError('Username already exists');
+                } else {
+                    users[username] = password;
+                    localStorage.setItem('brawlx_users', JSON.stringify(users));
+                    currentUser = username;
+                    localStorage.setItem('brawlx_current_user', username);
+                    showGame();
+                }
+            }
+            
+            return false;
+        }
+
+        // Logout
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('brawlx_current_user');
+            currentUser = null;
+            location.reload();
+        });
+
+        function showError(message) {
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+        }
+
+        function showGame() {
+            authScreen.style.display = 'none';
+            welcomeUser.style.display = 'block';
+            currentUserSpan.textContent = currentUser;
+        }
+
+        // Game State
+        const game = {
+            active: false,
+            timer: 99,
+            timerInterval: null,
+            player1: {
+                x: 100,
+                y: 100,
+                health: 100,
+                isBlocking: false,
+                combo: 0,
+                isJumping: false,
+                velocityY: 0
+            },
+            player2: {
+                x: window.innerWidth - 180,
+                y: 100,
+                health: 100,
+                isBlocking: false,
+                combo: 0,
+                isJumping: false,
+                velocityY: 0
+            }
+        };
+
+        // Elements
+        const titleScreen = document.getElementById('title-screen');
+        const startBtn = document.getElementById('start-btn');
+        const hud = document.getElementById('hud');
+        const arena = document.getElementById('arena');
+        const controls = document.getElementById('controls');
+        const gameOver = document.getElementById('game-over');
+        const winnerText = document.getElementById('winner-text');
+        const restartBtn = document.getElementById('restart-btn');
+        const timerDisplay = document.getElementById('timer');
+        const p1Health = document.getElementById('p1-health');
+        const p2Health = document.getElementById('p2-health');
+        const player1El = document.getElementById('player1');
+        const player2El = document.getElementById('player2');
+
+        // Close controls button
+        const closeControlsBtn = document.getElementById('close-controls');
+        closeControlsBtn.addEventListener('click', () => {
+            controls.style.display = 'none';
+        });
+
+        // Leave button
+        const leaveBtn = document.getElementById('leave-btn');
+        leaveBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            returnToLobby();
+        });
+
+        function returnToLobby() {
+            game.active = false;
+            if (game.timerInterval) {
+                clearInterval(game.timerInterval);
+                game.timerInterval = null;
+            }
+            
+            // Reset game state
+            game.timer = 99;
+            game.player1.health = 100;
+            game.player2.health = 100;
+            game.player1.x = 100;
+            game.player2.x = window.innerWidth - 180;
+            game.player1.combo = 0;
+            game.player2.combo = 0;
+            
+            // Reset UI
+            hud.style.display = 'none';
+            arena.style.display = 'none';
+            controls.style.display = 'none';
+            gameOver.style.display = 'none';
+            titleScreen.style.display = 'flex';
+            welcomeUser.style.display = 'block';
+        }
+
+        // AI Configuration
+        const ai = {
+            nextAction: 0,
+            actionDelay: 0,
+            state: 'idle', // idle, attacking, defending, moving
+            difficulty: 0.7 // 0-1, higher is smarter
+        };
+
+        // Input tracking
+        const keys = {
+            arrowleft: false,
+            arrowright: false,
+            arrowup: false,
+            arrowdown: false
+        };
+
+        // Start game
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', () => {
+            returnToLobby();
+        });
+
+        function startGame() {
+            titleScreen.style.display = 'none';
+            hud.style.display = 'block';
+            arena.style.display = 'block';
+            controls.style.display = 'flex';
+            welcomeUser.style.display = 'none'; // Hide welcome during game
+            game.active = true;
+            
+            // Start timer
+            game.timerInterval = setInterval(() => {
+                game.timer--;
+                timerDisplay.textContent = game.timer;
+                
+                if (game.timer <= 0) {
+                    endGame();
+                }
+
+                // Timer warning
+                if (game.timer <= 10) {
+                    timerDisplay.style.color = 'var(--damage-red)';
+                    timerDisplay.style.animation = 'timerPulse 0.5s ease-in-out infinite';
+                }
+            }, 1000);
+
+            gameLoop();
+        }
+
+        function resetGame() {
+            game.timer = 99;
+            game.player1.health = 100;
+            game.player2.health = 100;
+            game.player1.x = 100;
+            game.player2.x = window.innerWidth - 180;
+            game.player1.combo = 0;
+            game.player2.combo = 0;
+            
+            p1Health.style.width = '100%';
+            p2Health.style.width = '100%';
+            timerDisplay.textContent = '99';
+            timerDisplay.style.color = 'var(--neon-yellow)';
+            timerDisplay.style.animation = 'timerPulse 1s ease-in-out infinite';
+            
+            gameOver.style.display = 'none';
+            game.active = true;
+            
+            if (!game.timerInterval) {
+                game.timerInterval = setInterval(() => {
+                    game.timer--;
+                    timerDisplay.textContent = game.timer;
+                    
+                    if (game.timer <= 0) {
+                        endGame();
+                    }
+
+                    if (game.timer <= 10) {
+                        timerDisplay.style.color = 'var(--damage-red)';
+                        timerDisplay.style.animation = 'timerPulse 0.5s ease-in-out infinite';
+                    }
+                }, 1000);
+            }
+        }
+
+        // Input handling
+        document.addEventListener('keydown', (e) => {
+            const key = e.key.toLowerCase();
+            keys[key] = true;
+            
+            if (!game.active) return;
+
+            // Player 1 actions (Arrow keys)
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                attack(game.player1, player1El, game.player2, 'punch');
+            }
+            if (e.key === 'Control') {
+                e.preventDefault();
+                attack(game.player1, player1El, game.player2, 'kick');
+            }
+            if (e.key === 'Shift') {
+                e.preventDefault();
+                game.player1.isBlocking = true;
+                player1El.classList.add('blocking');
+            }
+
+            // Jump
+            if (e.key === 'ArrowUp' && !game.player1.isJumping) {
+                e.preventDefault();
+                jump(game.player1, player1El);
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            const key = e.key.toLowerCase();
+            keys[key] = false;
+            
+            if (e.key === 'Shift') {
+                game.player1.isBlocking = false;
+                player1El.classList.remove('blocking');
+            }
+        });
+
+        function jump(player, element) {
+            player.isJumping = true;
+            player.velocityY = -15;
+            element.classList.add('jumping');
+            
+            setTimeout(() => {
+                element.classList.remove('jumping');
+                player.isJumping = false;
+            }, 500);
+        }
+
+        function attack(attacker, attackerEl, defender, type) {
+            const distance = Math.abs(attacker.x - defender.x);
+            const hitRange = type === 'kick' ? 120 : 100;
+            
+            if (type === 'punch') {
+                attackerEl.classList.add('punching');
+                setTimeout(() => attackerEl.classList.remove('punching'), 200);
+            } else {
+                attackerEl.classList.add('kicking');
+                setTimeout(() => attackerEl.classList.remove('kicking'), 300);
+            }
+
+            if (distance < hitRange) {
+                const damage = type === 'kick' ? 8 : 5;
+                const actualDamage = defender.isBlocking ? damage * 0.3 : damage;
+                
+                defender.health = Math.max(0, defender.health - actualDamage);
+                
+                // Update health bar - simply set width percentage
+                if (defender === game.player1) {
+                    p1Health.style.width = defender.health + '%';
+                    console.log('P1 Health:', defender.health, 'Width:', p1Health.style.width);
+                } else {
+                    p2Health.style.width = defender.health + '%';
+                    console.log('P2 Health:', defender.health, 'Width:', p2Health.style.width);
+                }
+                
+                // Hit effect
+                const defenderEl = defender === game.player1 ? player1El : player2El;
+                defenderEl.classList.add('hit');
+                setTimeout(() => defenderEl.classList.remove('hit'), 200);
+                
+                // Combo
+                if (!defender.isBlocking) {
+                    attacker.combo++;
+                    if (attacker.combo > 1) {
+                        showCombo(attacker === game.player1 ? player1El : player2El, attacker.combo);
+                    }
+                } else {
+                    attacker.combo = 0;
+                }
+
+                // Particles
+                createHitParticles(defender === game.player1 ? player1El : player2El);
+                
+                // Check for KO
+                if (defender.health <= 0) {
+                    endGame();
+                }
+            }
+        }
+
+        function showCombo(element, combo) {
+            const comboEl = document.createElement('div');
+            comboEl.className = 'combo';
+            comboEl.textContent = combo + ' HIT COMBO!';
+            comboEl.style.left = element.offsetLeft + 'px';
+            comboEl.style.top = (element.offsetTop - 50) + 'px';
+            arena.appendChild(comboEl);
+            
+            setTimeout(() => comboEl.remove(), 500);
+        }
+
+        function createHitParticles(element) {
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const angle = (Math.PI * 2 * i) / 8;
+                const distance = 50;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.setProperty('--ty', ty + 'px');
+                particle.style.left = (element.offsetLeft + 40) + 'px';
+                particle.style.top = (element.offsetTop + 60) + 'px';
+                
+                arena.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 500);
+            }
+        }
+
+        function gameLoop() {
+            if (!game.active) return;
+
+            const speed = 5;
+
+            // Player 1 movement (Arrow keys)
+            if (keys['arrowleft'] && game.player1.x > 0) {
+                game.player1.x -= speed;
+            }
+            if (keys['arrowright'] && game.player1.x < window.innerWidth - 100) {
+                game.player1.x += speed;
+            }
+            if (keys['arrowdown']) {
+                // Optional crouch or dodge
+            }
+
+            // AI Logic for Player 2
+            updateAI();
+
+            // Update positions
+            player1El.style.left = game.player1.x + 'px';
+            player2El.style.left = game.player2.x + 'px';
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function updateAI() {
+            const distance = Math.abs(game.player1.x - game.player2.x);
+            const now = Date.now();
+
+            // AI decision making
+            if (now > ai.nextAction) {
+                ai.actionDelay = 300 + Math.random() * 700; // Random delay between actions
+                ai.nextAction = now + ai.actionDelay;
+
+                // Decide AI behavior based on distance and health
+                if (distance > 150) {
+                    // Too far - move closer
+                    ai.state = 'moving';
+                } else if (distance < 80) {
+                    // Too close - maybe back up or attack
+                    if (Math.random() < 0.7) {
+                        ai.state = 'attacking';
+                    } else {
+                        ai.state = 'backing';
+                    }
+                } else {
+                    // Perfect range - attack or defend
+                    const healthRatio = game.player2.health / 100;
+                    
+                    if (healthRatio < 0.3 && Math.random() < 0.5) {
+                        // Low health - more defensive
+                        ai.state = 'defending';
+                    } else if (Math.random() < ai.difficulty) {
+                        ai.state = 'attacking';
+                    } else {
+                        ai.state = 'moving';
+                    }
+                }
+            }
+
+            // Execute AI state
+            const aiSpeed = 4;
+            
+            switch(ai.state) {
+                case 'moving':
+                    // Move toward player
+                    if (game.player2.x > game.player1.x + 100) {
+                        game.player2.x -= aiSpeed;
+                    } else if (game.player2.x < game.player1.x - 100) {
+                        game.player2.x += aiSpeed;
+                    }
+                    break;
+                    
+                case 'backing':
+                    // Move away from player
+                    if (game.player2.x > game.player1.x) {
+                        game.player2.x += aiSpeed;
+                    } else {
+                        game.player2.x -= aiSpeed;
+                    }
+                    break;
+                    
+                case 'attacking':
+                    // Attack
+                    const attackType = Math.random() < 0.6 ? 'punch' : 'kick';
+                    attack(game.player2, player2El, game.player1, attackType);
+                    ai.state = 'idle';
+                    
+                    // Sometimes jump while attacking
+                    if (Math.random() < 0.2 && !game.player2.isJumping) {
+                        jump(game.player2, player2El);
+                    }
+                    break;
+                    
+                case 'defending':
+                    // Block
+                    if (!game.player2.isBlocking) {
+                        game.player2.isBlocking = true;
+                        player2El.classList.add('blocking');
+                        setTimeout(() => {
+                            game.player2.isBlocking = false;
+                            player2El.classList.remove('blocking');
+                            ai.state = 'idle';
+                        }, 500 + Math.random() * 500);
+                    }
+                    break;
+            }
+
+            // Keep AI in bounds
+            if (game.player2.x < 0) game.player2.x = 0;
+            if (game.player2.x > window.innerWidth - 100) game.player2.x = window.innerWidth - 100;
+        }
+
+        function endGame() {
+            game.active = false;
+            clearInterval(game.timerInterval);
+            game.timerInterval = null;
+            
+            let winner;
+            if (game.player1.health > game.player2.health) {
+                winner = 'YOU WIN!';
+                winnerText.style.color = 'var(--neon-cyan)';
+            } else if (game.player2.health > game.player1.health) {
+                winner = 'AI WINS!';
+                winnerText.style.color = 'var(--neon-magenta)';
+            } else {
+                winner = 'DRAW!';
+                winnerText.style.color = 'var(--neon-yellow)';
+            }
+            
+            winnerText.textContent = winner;
+            gameOver.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
