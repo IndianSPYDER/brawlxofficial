@@ -731,7 +731,7 @@
         /* Controls display */
         #controls {
             position: fixed;
-            top: 120px;
+            top: 200px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0,0,0,0.95);
@@ -1053,6 +1053,339 @@
             font-size: 1.1rem;
             opacity: 0.8;
         }
+
+        /* Device Selection Screen */
+        #device-selection {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            animation: fadeIn 0.3s;
+        }
+
+        .device-selection-container {
+            background: rgba(0,0,0,0.9);
+            border: 3px solid var(--neon-cyan);
+            padding: 3rem 4rem;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0,255,255,0.5);
+        }
+
+        .device-selection-container h2 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .device-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .device-btn {
+            padding: 2rem 3rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            background: transparent;
+            border: 3px solid var(--neon-cyan);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            min-width: 200px;
+        }
+
+        .device-btn.computer {
+            color: var(--neon-cyan);
+            border-color: var(--neon-cyan);
+        }
+
+        .device-btn.computer:hover {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+            box-shadow: 0 0 30px var(--neon-cyan);
+            transform: scale(1.05);
+        }
+
+        .device-btn.mobile {
+            color: var(--neon-magenta);
+            border-color: var(--neon-magenta);
+        }
+
+        .device-btn.mobile:hover {
+            background: var(--neon-magenta);
+            color: var(--dark-bg);
+            box-shadow: 0 0 30px var(--neon-magenta);
+            transform: scale(1.05);
+        }
+
+        .device-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* AI Difficulty Selection */
+        #ai-difficulty-selection {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            animation: fadeIn 0.3s;
+        }
+
+        .ai-difficulty-container {
+            background: rgba(0,0,0,0.9);
+            border: 3px solid var(--neon-magenta);
+            padding: 3rem 4rem;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255,0,255,0.5);
+        }
+
+        .ai-difficulty-container h2 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--neon-magenta), var(--neon-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .difficulty-btn {
+            padding: 1.2rem 3rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            background: transparent;
+            border: 2px solid;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            min-width: 300px;
+        }
+
+        .difficulty-btn.easy {
+            color: var(--health-green);
+            border-color: var(--health-green);
+        }
+
+        .difficulty-btn.easy:hover {
+            background: var(--health-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--health-green);
+        }
+
+        .difficulty-btn.normal {
+            color: var(--neon-yellow);
+            border-color: var(--neon-yellow);
+        }
+
+        .difficulty-btn.normal:hover {
+            background: var(--neon-yellow);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-yellow);
+        }
+
+        .difficulty-btn.medium {
+            color: var(--neon-magenta);
+            border-color: var(--neon-magenta);
+        }
+
+        .difficulty-btn.medium:hover {
+            background: var(--neon-magenta);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-magenta);
+        }
+
+        .difficulty-btn.hard {
+            color: var(--damage-red);
+            border-color: var(--damage-red);
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .difficulty-btn.hard:hover {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        /* Mobile Controls UI */
+        #mobile-controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            z-index: 200;
+            display: none;
+            pointer-events: none;
+        }
+
+        .mobile-dpad {
+            position: absolute;
+            left: 40px;
+            bottom: 40px;
+            width: 180px;
+            height: 180px;
+            pointer-events: all;
+        }
+
+        .dpad-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+        }
+
+        .dpad-btn {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(0,255,255,0.2);
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.1s;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .dpad-btn:active {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .dpad-up {
+            top: 0;
+            left: 60px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .dpad-down {
+            bottom: 0;
+            left: 60px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .dpad-left {
+            left: 0;
+            top: 60px;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .dpad-right {
+            right: 0;
+            top: 60px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .mobile-action-buttons {
+            position: absolute;
+            right: 40px;
+            bottom: 40px;
+            display: flex;
+            gap: 20px;
+            pointer-events: all;
+        }
+
+        .action-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,0,255,0.2);
+            border: 3px solid var(--neon-magenta);
+            color: var(--neon-magenta);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.1s;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .action-btn:active {
+            background: var(--neon-magenta);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-magenta);
+            transform: scale(0.95);
+        }
+
+        .action-btn.block {
+            background: rgba(255,255,0,0.2);
+            border-color: var(--neon-yellow);
+            color: var(--neon-yellow);
+        }
+
+        .action-btn.block:active {
+            background: var(--neon-yellow);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-yellow);
+        }
+
+        .action-btn.cooldown {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .action-btn .cooldown-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            height: 0%;
+            transition: height 0.1s linear;
+            border-radius: 0 0 50% 50%;
+        }
+
+        .action-btn.recharging .cooldown-overlay {
+            animation: cooldownFill 0.5s linear;
+        }
+
+        @keyframes cooldownFill {
+            from { height: 100%; }
+            to { height: 0%; }
+        }
     </style>
 </head>
 <body>
@@ -1075,6 +1408,36 @@
             <div class="auth-toggle">
                 <span id="toggle-text">Don't have an account? </span>
                 <a id="toggle-link">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Device Selection Screen -->
+    <div id="device-selection">
+        <div class="device-selection-container">
+            <h2>SELECT YOUR DEVICE</h2>
+            <div class="device-buttons">
+                <button class="device-btn computer" id="computer-btn">
+                    <span class="device-icon">💻</span>
+                    COMPUTER
+                </button>
+                <button class="device-btn mobile" id="mobile-btn">
+                    <span class="device-icon">📱</span>
+                    MOBILE/IPAD
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Difficulty Selection -->
+    <div id="ai-difficulty-selection">
+        <div class="ai-difficulty-container">
+            <h2>CHOOSE AI BOT DIFFICULTY LEVEL</h2>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn easy" id="difficulty-easy">EASY</button>
+                <button class="difficulty-btn normal" id="difficulty-normal">NORMAL</button>
+                <button class="difficulty-btn medium" id="difficulty-medium">MEDIUM</button>
+                <button class="difficulty-btn hard" id="difficulty-hard">HARD [COMING SOON]</button>
             </div>
         </div>
     </div>
@@ -1133,9 +1496,33 @@
                         <div class="admin-panel-icon">⚡</div>
                         <h3>Admin Commands</h3>
                     </div>
-                    <div class="tbd-placeholder">
-                        <h4>TBD</h4>
-                        <p>Commands coming soon...</p>
+                    
+                    <!-- Password Entry -->
+                    <div id="admin-password-entry" style="margin-bottom: 2rem;">
+                        <div style="margin-bottom: 1rem;">
+                            <label style="color: var(--neon-cyan); font-size: 1rem; margin-bottom: 0.5rem; display: block;">ENTER ADMIN CODE</label>
+                            <input type="password" id="admin-code-input" placeholder="****" style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.7); border: 2px solid var(--neon-cyan); color: var(--neon-cyan); font-family: 'Orbitron', monospace; font-size: 1rem;">
+                        </div>
+                        <p id="admin-error-msg" style="color: var(--damage-red); text-align: center; display: none; margin-top: 0.5rem;">Invalid code</p>
+                        <button id="admin-unlock-btn" style="width: 100%; padding: 1rem; font-family: 'Orbitron', monospace; font-size: 1rem; background: transparent; color: var(--neon-cyan); border: 2px solid var(--neon-cyan); cursor: pointer; text-transform: uppercase; transition: all 0.3s;">UNLOCK</button>
+                    </div>
+                    
+                    <!-- Command Input (Hidden until unlocked) -->
+                    <div id="admin-command-panel" style="display: none;">
+                        <div style="background: rgba(0,255,255,0.1); border: 1px solid var(--neon-cyan); padding: 1rem; margin-bottom: 1rem; font-size: 0.85rem; color: var(--neon-cyan); line-height: 1.8;">
+                            <strong style="color: var(--neon-yellow);">Available Commands:</strong><br>
+                            • <strong>global_message [message]</strong> - Send global message<br>
+                            Signed: Admin
+                        </div>
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <label style="color: var(--neon-cyan); font-size: 1rem; margin-bottom: 0.5rem; display: block;">COMMAND INPUT</label>
+                            <input type="text" id="admin-command-input" placeholder="global_message Hello!" style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.7); border: 2px solid var(--neon-cyan); color: var(--neon-cyan); font-family: 'Orbitron', monospace; font-size: 1rem;">
+                        </div>
+                        
+                        <button id="admin-execute-btn" style="width: 100%; padding: 1rem; font-family: 'Orbitron', monospace; font-size: 1rem; background: transparent; color: var(--neon-yellow); border: 2px solid var(--neon-yellow); cursor: pointer; text-transform: uppercase; transition: all 0.3s;">EXECUTE</button>
+                        
+                        <div id="admin-output" style="margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.7); border: 2px solid var(--neon-cyan); min-height: 100px; max-height: 150px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--neon-cyan);"></div>
                     </div>
                 </div>
 
@@ -1248,7 +1635,48 @@
         </div>
     </div>
 
+    <!-- Mobile Controls -->
+    <div id="mobile-controls">
+        <!-- D-Pad -->
+        <div class="mobile-dpad">
+            <div class="dpad-center"></div>
+            <div class="dpad-btn dpad-up" id="mobile-up">↑</div>
+            <div class="dpad-btn dpad-down" id="mobile-down">↓</div>
+            <div class="dpad-btn dpad-left" id="mobile-left">←</div>
+            <div class="dpad-btn dpad-right" id="mobile-right">→</div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mobile-action-buttons">
+            <div class="action-btn block" id="mobile-block">
+                BLOCK
+            </div>
+            <div class="action-btn" id="mobile-punch">
+                PUNCH
+                <div class="cooldown-overlay"></div>
+            </div>
+            <div class="action-btn" id="mobile-kick">
+                KICK
+                <div class="cooldown-overlay"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Device Selection
+        let isMobile = false;
+        const deviceSelection = document.getElementById('device-selection');
+        const computerBtn = document.getElementById('computer-btn');
+        const mobileBtn = document.getElementById('mobile-btn');
+        const mobileControls = document.getElementById('mobile-controls');
+
+        // AI Difficulty
+        const aiDifficultySelection = document.getElementById('ai-difficulty-selection');
+        const difficultyEasyBtn = document.getElementById('difficulty-easy');
+        const difficultyNormalBtn = document.getElementById('difficulty-normal');
+        const difficultyMediumBtn = document.getElementById('difficulty-medium');
+        let selectedDifficulty = 'normal';
+
         // Authentication System
         let currentUser = null;
         let isLoginMode = true;
@@ -1276,7 +1704,7 @@
             }
 
             globalMessageBanner.classList.remove('fade-out');
-            globalMessageBanner.textContent = message + ' - The Dev';
+            globalMessageBanner.textContent = message;
             globalMessageBanner.style.display = 'block';
 
             globalMessageTimeout = setTimeout(() => {
@@ -1312,9 +1740,23 @@
         const adminBtn = document.getElementById('admin-btn');
         const adminConsoleModal = document.getElementById('admin-console-modal');
         const closeAdminModal = document.getElementById('close-admin-modal');
+        const adminCodeInput = document.getElementById('admin-code-input');
+        const adminUnlockBtn = document.getElementById('admin-unlock-btn');
+        const adminPasswordEntry = document.getElementById('admin-password-entry');
+        const adminCommandPanel = document.getElementById('admin-command-panel');
+        const adminErrorMsg = document.getElementById('admin-error-msg');
+        const adminCommandInput = document.getElementById('admin-command-input');
+        const adminExecuteBtn = document.getElementById('admin-execute-btn');
+        const adminOutput = document.getElementById('admin-output');
+        const ADMIN_CODE = '67';
 
         adminBtn.addEventListener('click', () => {
             adminConsoleModal.style.display = 'flex';
+            adminCodeInput.value = '';
+            adminErrorMsg.style.display = 'none';
+            adminPasswordEntry.style.display = 'block';
+            adminCommandPanel.style.display = 'none';
+            adminOutput.innerHTML = '';
         });
 
         closeAdminModal.addEventListener('click', () => {
@@ -1326,6 +1768,76 @@
                 adminConsoleModal.style.display = 'none';
             }
         });
+
+        // Admin unlock
+        adminUnlockBtn.addEventListener('click', unlockAdmin);
+        adminCodeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                unlockAdmin();
+            }
+        });
+
+        function unlockAdmin() {
+            if (adminCodeInput.value === ADMIN_CODE) {
+                adminPasswordEntry.style.display = 'none';
+                adminCommandPanel.style.display = 'block';
+                addAdminLog('Access granted. Admin mode activated.', 'success');
+                adminCommandInput.focus();
+            } else {
+                adminErrorMsg.style.display = 'block';
+                adminCodeInput.value = '';
+            }
+        }
+
+        // Admin execute command
+        adminExecuteBtn.addEventListener('click', executeAdminCommand);
+        adminCommandInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                executeAdminCommand();
+            }
+        });
+
+        function executeAdminCommand() {
+            const command = adminCommandInput.value.trim();
+            if (!command) return;
+
+            addAdminLog('> ' + command, 'command');
+            adminCommandInput.value = '';
+
+            // Parse command
+            const parts = command.split(' ');
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1).join(' ');
+
+            if (cmd === 'global_message') {
+                if (args.length > 0) {
+                    showGlobalMessage(args + ' - Admin');
+                    addAdminLog('Global message sent successfully', 'success');
+                } else {
+                    addAdminLog('Error: Message required. Usage: global_message [message]', 'error');
+                }
+            } else {
+                addAdminLog('Unknown command: "' + cmd + '". Available: global_message', 'error');
+            }
+
+            adminOutput.scrollTop = adminOutput.scrollHeight;
+        }
+
+        function addAdminLog(message, type) {
+            const line = document.createElement('div');
+            line.style.marginBottom = '0.3rem';
+            if (type === 'success') {
+                line.style.color = 'var(--health-green)';
+            } else if (type === 'error') {
+                line.style.color = 'var(--damage-red)';
+            } else if (type === 'command') {
+                line.style.color = 'var(--neon-yellow)';
+            } else {
+                line.style.color = 'var(--neon-cyan)';
+            }
+            line.textContent = message;
+            adminOutput.appendChild(line);
+        }
 
         // Check if user is already logged in
         window.addEventListener('load', () => {
@@ -1434,7 +1946,9 @@
                 isBlocking: false,
                 combo: 0,
                 isJumping: false,
-                velocityY: 0
+                velocityY: 0,
+                punchCooldown: false,
+                kickCooldown: false
             },
             player2: {
                 x: window.innerWidth - 180,
@@ -1488,10 +2002,13 @@
             game.player2.x = window.innerWidth - 180;
             game.player1.combo = 0;
             game.player2.combo = 0;
+            game.player1.punchCooldown = false;
+            game.player1.kickCooldown = false;
             
             hud.style.display = 'none';
             arena.style.display = 'none';
             controls.style.display = 'none';
+            mobileControls.style.display = 'none';
             gameOver.style.display = 'none';
             titleScreen.style.display = 'flex';
             welcomeUser.style.display = 'block';
@@ -1501,8 +2018,22 @@
             nextAction: 0,
             actionDelay: 0,
             state: 'idle',
-            difficulty: 0.7
+            difficulty: 0.7,
+            reactionSpeed: 500
         };
+
+        function setAIDifficulty() {
+            if (selectedDifficulty === 'easy') {
+                ai.difficulty = 0.4;
+                ai.reactionSpeed = 800;
+            } else if (selectedDifficulty === 'normal') {
+                ai.difficulty = 0.6;
+                ai.reactionSpeed = 600;
+            } else if (selectedDifficulty === 'medium') {
+                ai.difficulty = 0.8;
+                ai.reactionSpeed = 350;
+            }
+        }
 
         const keys = {
             arrowleft: false,
@@ -1511,18 +2042,64 @@
             arrowdown: false
         };
 
-        startBtn.addEventListener('click', startGame);
+        startBtn.addEventListener('click', showDeviceSelection);
         restartBtn.addEventListener('click', () => {
             returnToLobby();
         });
 
-        function startGame() {
+        function showDeviceSelection() {
             titleScreen.style.display = 'none';
+            deviceSelection.style.display = 'flex';
+        }
+
+        computerBtn.addEventListener('click', () => {
+            isMobile = false;
+            deviceSelection.style.display = 'none';
+            aiDifficultySelection.style.display = 'flex';
+        });
+
+        mobileBtn.addEventListener('click', () => {
+            isMobile = true;
+            deviceSelection.style.display = 'none';
+            aiDifficultySelection.style.display = 'flex';
+        });
+
+        // AI Difficulty Selection
+        difficultyEasyBtn.addEventListener('click', () => {
+            selectedDifficulty = 'easy';
+            aiDifficultySelection.style.display = 'none';
+            startGame();
+        });
+
+        difficultyNormalBtn.addEventListener('click', () => {
+            selectedDifficulty = 'normal';
+            aiDifficultySelection.style.display = 'none';
+            startGame();
+        });
+
+        difficultyMediumBtn.addEventListener('click', () => {
+            selectedDifficulty = 'medium';
+            aiDifficultySelection.style.display = 'none';
+            startGame();
+        });
+
+        function startGame() {
             hud.style.display = 'block';
             arena.style.display = 'block';
-            controls.style.display = 'flex';
             welcomeUser.style.display = 'none';
             game.active = true;
+            
+            // Set AI difficulty based on selection
+            setAIDifficulty();
+            
+            // Show appropriate controls
+            if (isMobile) {
+                mobileControls.style.display = 'block';
+                controls.style.display = 'none';
+            } else {
+                controls.style.display = 'flex';
+                mobileControls.style.display = 'none';
+            }
             
             game.timerInterval = setInterval(() => {
                 game.timer--;
@@ -1584,11 +2161,15 @@
 
             if (e.key === ' ' || e.key === 'Spacebar') {
                 e.preventDefault();
-                attack(game.player1, player1El, game.player2, 'punch');
+                if (!game.player1.punchCooldown) {
+                    attack(game.player1, player1El, game.player2, 'punch');
+                }
             }
             if (e.key === 'Control') {
                 e.preventDefault();
-                attack(game.player1, player1El, game.player2, 'kick');
+                if (!game.player1.kickCooldown) {
+                    attack(game.player1, player1El, game.player2, 'kick');
+                }
             }
             if (e.key === 'Shift') {
                 e.preventDefault();
@@ -1627,12 +2208,46 @@
             const distance = Math.abs(attacker.x - defender.x);
             const hitRange = type === 'kick' ? 120 : 100;
             
+            // Check cooldowns for player1 only
+            if (attacker === game.player1) {
+                if (type === 'punch' && attacker.punchCooldown) return;
+                if (type === 'kick' && attacker.kickCooldown) return;
+            }
+            
             if (type === 'punch') {
                 attackerEl.classList.add('punching');
                 setTimeout(() => attackerEl.classList.remove('punching'), 200);
+                
+                // Set punch cooldown for player1
+                if (attacker === game.player1) {
+                    attacker.punchCooldown = true;
+                    if (isMobile) {
+                        mobilePunchBtn.classList.add('cooldown', 'recharging');
+                    }
+                    setTimeout(() => {
+                        attacker.punchCooldown = false;
+                        if (isMobile) {
+                            mobilePunchBtn.classList.remove('cooldown', 'recharging');
+                        }
+                    }, 500);
+                }
             } else {
                 attackerEl.classList.add('kicking');
                 setTimeout(() => attackerEl.classList.remove('kicking'), 300);
+                
+                // Set kick cooldown for player1
+                if (attacker === game.player1) {
+                    attacker.kickCooldown = true;
+                    if (isMobile) {
+                        mobileKickBtn.classList.add('cooldown', 'recharging');
+                    }
+                    setTimeout(() => {
+                        attacker.kickCooldown = false;
+                        if (isMobile) {
+                            mobileKickBtn.classList.remove('cooldown', 'recharging');
+                        }
+                    }, 500);
+                }
             }
 
             if (distance < hitRange) {
@@ -1725,7 +2340,7 @@
             const now = Date.now();
 
             if (now > ai.nextAction) {
-                ai.actionDelay = 300 + Math.random() * 700;
+                ai.actionDelay = ai.reactionSpeed + Math.random() * 400;
                 ai.nextAction = now + ai.actionDelay;
 
                 if (distance > 150) {
@@ -1815,6 +2430,98 @@
             winnerText.textContent = winner;
             gameOver.style.display = 'block';
         }
+
+        // Mobile Controls Touch Events
+        const mobileUpBtn = document.getElementById('mobile-up');
+        const mobileDownBtn = document.getElementById('mobile-down');
+        const mobileLeftBtn = document.getElementById('mobile-left');
+        const mobileRightBtn = document.getElementById('mobile-right');
+        const mobilePunchBtn = document.getElementById('mobile-punch');
+        const mobileKickBtn = document.getElementById('mobile-kick');
+        const mobileBlockBtn = document.getElementById('mobile-block');
+
+        // D-Pad controls - Jump
+        function handleMobileJump(e) {
+            e.preventDefault();
+            if (game.active && !game.player1.isJumping) {
+                jump(game.player1, player1El);
+            }
+        }
+        mobileUpBtn.addEventListener('touchstart', handleMobileJump);
+        mobileUpBtn.addEventListener('mousedown', handleMobileJump);
+
+        // Left movement
+        function handleLeftStart(e) {
+            e.preventDefault();
+            if (game.active) {
+                keys['arrowleft'] = true;
+            }
+        }
+        function handleLeftEnd(e) {
+            e.preventDefault();
+            keys['arrowleft'] = false;
+        }
+        mobileLeftBtn.addEventListener('touchstart', handleLeftStart);
+        mobileLeftBtn.addEventListener('mousedown', handleLeftStart);
+        mobileLeftBtn.addEventListener('touchend', handleLeftEnd);
+        mobileLeftBtn.addEventListener('mouseup', handleLeftEnd);
+        mobileLeftBtn.addEventListener('mouseleave', handleLeftEnd);
+
+        // Right movement
+        function handleRightStart(e) {
+            e.preventDefault();
+            if (game.active) {
+                keys['arrowright'] = true;
+            }
+        }
+        function handleRightEnd(e) {
+            e.preventDefault();
+            keys['arrowright'] = false;
+        }
+        mobileRightBtn.addEventListener('touchstart', handleRightStart);
+        mobileRightBtn.addEventListener('mousedown', handleRightStart);
+        mobileRightBtn.addEventListener('touchend', handleRightEnd);
+        mobileRightBtn.addEventListener('mouseup', handleRightEnd);
+        mobileRightBtn.addEventListener('mouseleave', handleRightEnd);
+
+        // Punch button
+        function handlePunch(e) {
+            e.preventDefault();
+            if (game.active && !game.player1.punchCooldown) {
+                attack(game.player1, player1El, game.player2, 'punch');
+            }
+        }
+        mobilePunchBtn.addEventListener('touchstart', handlePunch);
+        mobilePunchBtn.addEventListener('mousedown', handlePunch);
+
+        // Kick button
+        function handleKick(e) {
+            e.preventDefault();
+            if (game.active && !game.player1.kickCooldown) {
+                attack(game.player1, player1El, game.player2, 'kick');
+            }
+        }
+        mobileKickBtn.addEventListener('touchstart', handleKick);
+        mobileKickBtn.addEventListener('mousedown', handleKick);
+
+        // Block button
+        function handleBlockStart(e) {
+            e.preventDefault();
+            if (game.active) {
+                game.player1.isBlocking = true;
+                player1El.classList.add('blocking');
+            }
+        }
+        function handleBlockEnd(e) {
+            e.preventDefault();
+            game.player1.isBlocking = false;
+            player1El.classList.remove('blocking');
+        }
+        mobileBlockBtn.addEventListener('touchstart', handleBlockStart);
+        mobileBlockBtn.addEventListener('mousedown', handleBlockStart);
+        mobileBlockBtn.addEventListener('touchend', handleBlockEnd);
+        mobileBlockBtn.addEventListener('mouseup', handleBlockEnd);
+        mobileBlockBtn.addEventListener('mouseleave', handleBlockEnd);
     </script>
 </body>
 </html>
