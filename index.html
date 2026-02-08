@@ -937,143 +937,121 @@
         .admin-console-content {
             background: rgba(0,0,0,0.98);
             border: 3px solid var(--neon-yellow);
-            padding: 3rem 4rem;
-            max-width: 700px;
-            width: 90%;
+            padding: 0;
+            max-width: 1200px;
+            width: 95%;
+            max-height: 85vh;
             box-shadow: 0 0 60px rgba(255,255,0,0.6);
             position: relative;
+            overflow: hidden;
         }
 
         .admin-console-content h2 {
             font-family: 'Black Ops One', cursive;
             font-size: 2.5rem;
             text-align: center;
-            margin-bottom: 2rem;
+            padding: 2rem 4rem;
+            margin: 0;
+            background: linear-gradient(90deg, rgba(0,255,255,0.2), rgba(255,0,255,0.2));
+            border-bottom: 2px solid var(--neon-yellow);
             color: var(--neon-yellow);
             text-shadow: 0 0 20px var(--neon-yellow);
         }
 
-        #admin-password-section {
-            display: block;
+        /* Split Panel Styles */
+        .admin-split-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            height: calc(85vh - 150px);
+            overflow-y: auto;
         }
 
-        #admin-console-section {
-            display: none;
+        .admin-panel-left,
+        .admin-panel-right {
+            padding: 2.5rem;
+            min-height: 400px;
         }
 
-        .admin-input-group {
-            margin-bottom: 1.5rem;
+        .admin-panel-left {
+            border-right: 2px solid rgba(0,255,255,0.3);
+            background: linear-gradient(135deg, rgba(0,255,255,0.05) 0%, transparent 100%);
         }
 
-        .admin-input-group label {
-            display: block;
-            color: var(--neon-yellow);
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
+        .admin-panel-right {
+            background: linear-gradient(135deg, rgba(255,0,64,0.05) 0%, transparent 100%);
+        }
+
+        .admin-panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0,255,255,0.3);
+        }
+
+        .admin-panel-header h3 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 1.8rem;
             text-transform: uppercase;
             letter-spacing: 0.1rem;
         }
 
-        .admin-input-group input {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(0,0,0,0.7);
-            border: 2px solid var(--neon-yellow);
-            color: var(--neon-yellow);
-            font-family: 'Orbitron', monospace;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .admin-input-group input:focus {
-            outline: none;
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(0,255,255,0.5);
-        }
-
-        .admin-console-output {
-            background: rgba(0,0,0,0.7);
-            border: 2px solid var(--neon-cyan);
-            padding: 1rem;
-            height: 200px;
-            overflow-y: auto;
-            margin-bottom: 1.5rem;
-            font-family: 'Courier New', monospace;
+        .admin-panel-left .admin-panel-header h3 {
             color: var(--neon-cyan);
-            font-size: 0.9rem;
-            line-height: 1.6;
+            text-shadow: 0 0 15px var(--neon-cyan);
         }
 
-        .admin-console-output::-webkit-scrollbar {
-            width: 8px;
+        .admin-panel-left .admin-panel-header {
+            border-bottom-color: rgba(0,255,255,0.3);
         }
 
-        .admin-console-output::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.5);
-        }
-
-        .admin-console-output::-webkit-scrollbar-thumb {
-            background: var(--neon-cyan);
-            box-shadow: 0 0 8px var(--neon-cyan);
-        }
-
-        .console-line {
-            margin-bottom: 0.3rem;
-        }
-
-        .console-line.success {
-            color: var(--health-green);
-        }
-
-        .console-line.error {
+        .admin-panel-right .admin-panel-header h3 {
             color: var(--damage-red);
+            text-shadow: 0 0 15px var(--damage-red);
         }
 
-        .console-line.info {
-            color: var(--neon-cyan);
+        .admin-panel-right .admin-panel-header {
+            border-bottom-color: rgba(255,0,64,0.3);
         }
 
-        .admin-btn-submit {
-            width: 100%;
-            padding: 1rem;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.1rem;
-            background: transparent;
-            color: var(--neon-yellow);
-            border: 2px solid var(--neon-yellow);
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.2rem;
-            transition: all 0.3s;
-            margin-top: 1rem;
+        .admin-panel-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
         }
 
-        .admin-btn-submit:hover {
-            background: var(--neon-yellow);
-            color: var(--dark-bg);
-            box-shadow: 0 0 20px var(--neon-yellow);
-        }
-
-        .admin-error {
-            color: var(--damage-red);
+        .tbd-placeholder {
+            background: rgba(0,0,0,0.6);
+            border: 2px dashed rgba(0,255,255,0.3);
+            padding: 4rem 2rem;
             text-align: center;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            display: none;
+            border-radius: 8px;
         }
 
-        .admin-commands-help {
-            background: rgba(0,255,255,0.1);
-            border: 1px solid var(--neon-cyan);
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.85rem;
+        .tbd-placeholder h4 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 3rem;
+            color: var(--neon-magenta);
+            text-shadow: 0 0 20px var(--neon-magenta);
+            margin-bottom: 1rem;
+            letter-spacing: 0.3rem;
+            animation: tbdPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes tbdPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .tbd-placeholder p {
             color: var(--neon-cyan);
-            line-height: 1.8;
-        }
-
-        .admin-commands-help strong {
-            color: var(--neon-yellow);
+            font-size: 1.1rem;
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -1145,38 +1123,33 @@
     <div id="admin-console-modal">
         <div class="admin-console-content">
             <button class="close-modal" id="close-admin-modal">×</button>
-            <h2>ADMIN CONSOLE</h2>
+            <h2>ADMIN COMMANDS + ADMIN ABUSE TIMES</h2>
             
-            <!-- Password Entry Section -->
-            <div id="admin-password-section">
-                <div class="admin-input-group">
-                    <label for="admin-password">Enter Access Code</label>
-                    <input type="password" id="admin-password" placeholder="****" autocomplete="off">
-                </div>
-                <div class="admin-error" id="admin-password-error">Invalid access code</div>
-                <button class="admin-btn-submit" id="admin-password-submit">Access Console</button>
-            </div>
-
-            <!-- Console Section -->
-            <div id="admin-console-section">
-                <div class="admin-commands-help">
-                    <strong>Available Commands:</strong><br>
-                    • <strong>global_message [message]</strong> - Send a global message to all players<br>
-                    • <strong>help</strong> - Show this help menu<br>
-                    • <strong>clear</strong> - Clear console output
-                </div>
-                
-                <div class="admin-console-output" id="admin-console-output">
-                    <div class="console-line info">Admin Console initialized...</div>
-                    <div class="console-line info">Type 'help' for available commands.</div>
+            <!-- Split Panel Container -->
+            <div class="admin-split-container">
+                <!-- Left Panel - Admin Commands -->
+                <div class="admin-panel-left">
+                    <div class="admin-panel-header">
+                        <div class="admin-panel-icon">⚡</div>
+                        <h3>Admin Commands</h3>
+                    </div>
+                    <div class="tbd-placeholder">
+                        <h4>TBD</h4>
+                        <p>Commands coming soon...</p>
+                    </div>
                 </div>
 
-                <div class="admin-input-group">
-                    <label for="admin-command-input">Command Input</label>
-                    <input type="text" id="admin-command-input" placeholder="Enter command..." autocomplete="off">
+                <!-- Right Panel - Admin Abuse Times -->
+                <div class="admin-panel-right">
+                    <div class="admin-panel-header">
+                        <div class="admin-panel-icon">🛡️</div>
+                        <h3>Admin Abuse Times</h3>
+                    </div>
+                    <div class="tbd-placeholder">
+                        <h4>TBD</h4>
+                        <p>Tracking coming soon...</p>
+                    </div>
                 </div>
-                
-                <button class="admin-btn-submit" id="admin-command-submit">Execute</button>
             </div>
         </div>
     </div>
@@ -1196,7 +1169,7 @@
             <div class="subtitle">Ultimate Street Fighter</div>
             <button id="start-btn">Start Fight</button>
             <button id="coming-soon-btn">What's Coming</button>
-            <button id="admin-btn">Admin Commands</button>
+            <button id="admin-btn">Admin Commands + Admin Abuse Times</button>
         </div>
 
         <!-- HUD -->
@@ -1298,28 +1271,22 @@
         let globalMessageTimeout = null;
 
         function showGlobalMessage(message) {
-            // Clear any existing timeout
             if (globalMessageTimeout) {
                 clearTimeout(globalMessageTimeout);
             }
 
-            // Remove fade-out class if it exists
             globalMessageBanner.classList.remove('fade-out');
-            
-            // Set message with dev signature and show
             globalMessageBanner.textContent = message + ' - The Dev';
             globalMessageBanner.style.display = 'block';
 
-            // Auto-hide after 3 seconds with fade out animation
             globalMessageTimeout = setTimeout(() => {
                 globalMessageBanner.classList.add('fade-out');
                 
-                // Actually hide after animation completes
                 setTimeout(() => {
                     globalMessageBanner.style.display = 'none';
                     globalMessageBanner.classList.remove('fade-out');
-                }, 500); // Match animation duration
-            }, 3000); // Show for 3 seconds
+                }, 500);
+            }, 3000);
         }
 
         // Coming Soon Modal
@@ -1345,29 +1312,9 @@
         const adminBtn = document.getElementById('admin-btn');
         const adminConsoleModal = document.getElementById('admin-console-modal');
         const closeAdminModal = document.getElementById('close-admin-modal');
-        const adminPasswordSection = document.getElementById('admin-password-section');
-        const adminConsoleSection = document.getElementById('admin-console-section');
-        const adminPasswordInput = document.getElementById('admin-password');
-        const adminPasswordSubmit = document.getElementById('admin-password-submit');
-        const adminPasswordError = document.getElementById('admin-password-error');
-        const adminCommandInput = document.getElementById('admin-command-input');
-        const adminCommandSubmit = document.getElementById('admin-command-submit');
-        const adminConsoleOutput = document.getElementById('admin-console-output');
-
-        const ADMIN_CODE = '67';
-        let adminAuthenticated = false;
 
         adminBtn.addEventListener('click', () => {
             adminConsoleModal.style.display = 'flex';
-            adminPasswordInput.value = '';
-            adminPasswordError.style.display = 'none';
-            if (!adminAuthenticated) {
-                adminPasswordSection.style.display = 'block';
-                adminConsoleSection.style.display = 'none';
-            } else {
-                adminPasswordSection.style.display = 'none';
-                adminConsoleSection.style.display = 'block';
-            }
         });
 
         closeAdminModal.addEventListener('click', () => {
@@ -1379,85 +1326,6 @@
                 adminConsoleModal.style.display = 'none';
             }
         });
-
-        // Password submission
-        adminPasswordSubmit.addEventListener('click', verifyAdminPassword);
-        adminPasswordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                verifyAdminPassword();
-            }
-        });
-
-        function verifyAdminPassword() {
-            const password = adminPasswordInput.value.trim();
-            if (password === ADMIN_CODE) {
-                adminAuthenticated = true;
-                adminPasswordSection.style.display = 'none';
-                adminConsoleSection.style.display = 'block';
-                adminPasswordError.style.display = 'none';
-                addConsoleMessage('Access granted. Welcome, Administrator.', 'success');
-                adminCommandInput.focus();
-            } else {
-                adminPasswordError.style.display = 'block';
-                adminPasswordInput.value = '';
-            }
-        }
-
-        // Command submission
-        adminCommandSubmit.addEventListener('click', executeAdminCommand);
-        adminCommandInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                executeAdminCommand();
-            }
-        });
-
-        function executeAdminCommand() {
-            const command = adminCommandInput.value.trim();
-            if (!command) return;
-
-            addConsoleMessage('> ' + command, 'info');
-            adminCommandInput.value = '';
-
-            // Parse command
-            const parts = command.split(' ');
-            const cmd = parts[0].toLowerCase();
-            const args = parts.slice(1).join(' ');
-
-            switch(cmd) {
-                case 'global_message':
-                    if (args.length > 0) {
-                        showGlobalMessage(args);
-                        addConsoleMessage('Global message sent: "' + args + '"', 'success');
-                    } else {
-                        addConsoleMessage('Error: Message text required. Usage: global_message [message]', 'error');
-                    }
-                    break;
-
-                case 'help':
-                    addConsoleMessage('Available Commands:', 'info');
-                    addConsoleMessage('  • global_message [message] - Send a global message', 'info');
-                    addConsoleMessage('  • help - Show this help menu', 'info');
-                    addConsoleMessage('  • clear - Clear console output', 'info');
-                    break;
-
-                case 'clear':
-                    adminConsoleOutput.innerHTML = '<div class="console-line info">Console cleared.</div>';
-                    break;
-
-                default:
-                    addConsoleMessage('Unknown command: "' + cmd + '". Type "help" for available commands.', 'error');
-            }
-
-            // Auto-scroll to bottom
-            adminConsoleOutput.scrollTop = adminConsoleOutput.scrollHeight;
-        }
-
-        function addConsoleMessage(message, type = 'info') {
-            const line = document.createElement('div');
-            line.className = 'console-line ' + type;
-            line.textContent = message;
-            adminConsoleOutput.appendChild(line);
-        }
 
         // Check if user is already logged in
         window.addEventListener('load', () => {
@@ -1512,7 +1380,6 @@
             }
 
             if (isLoginMode) {
-                // Login
                 const users = JSON.parse(localStorage.getItem('brawlx_users') || '{}');
                 if (users[username] && users[username] === password) {
                     currentUser = username;
@@ -1522,7 +1389,6 @@
                     showError('Invalid username or password');
                 }
             } else {
-                // Sign up
                 const users = JSON.parse(localStorage.getItem('brawlx_users') || '{}');
                 if (users[username]) {
                     showError('Username already exists');
@@ -1596,13 +1462,11 @@
         const player1El = document.getElementById('player1');
         const player2El = document.getElementById('player2');
 
-        // Close controls button
         const closeControlsBtn = document.getElementById('close-controls');
         closeControlsBtn.addEventListener('click', () => {
             controls.style.display = 'none';
         });
 
-        // Leave button
         const leaveBtn = document.getElementById('leave-btn');
         leaveBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -1617,7 +1481,6 @@
                 game.timerInterval = null;
             }
             
-            // Reset game state
             game.timer = 99;
             game.player1.health = 100;
             game.player2.health = 100;
@@ -1626,7 +1489,6 @@
             game.player1.combo = 0;
             game.player2.combo = 0;
             
-            // Reset UI
             hud.style.display = 'none';
             arena.style.display = 'none';
             controls.style.display = 'none';
@@ -1635,15 +1497,13 @@
             welcomeUser.style.display = 'block';
         }
 
-        // AI Configuration
         const ai = {
             nextAction: 0,
             actionDelay: 0,
-            state: 'idle', // idle, attacking, defending, moving
-            difficulty: 0.7 // 0-1, higher is smarter
+            state: 'idle',
+            difficulty: 0.7
         };
 
-        // Input tracking
         const keys = {
             arrowleft: false,
             arrowright: false,
@@ -1651,7 +1511,6 @@
             arrowdown: false
         };
 
-        // Start game
         startBtn.addEventListener('click', startGame);
         restartBtn.addEventListener('click', () => {
             returnToLobby();
@@ -1662,10 +1521,9 @@
             hud.style.display = 'block';
             arena.style.display = 'block';
             controls.style.display = 'flex';
-            welcomeUser.style.display = 'none'; // Hide welcome during game
+            welcomeUser.style.display = 'none';
             game.active = true;
             
-            // Start timer
             game.timerInterval = setInterval(() => {
                 game.timer--;
                 timerDisplay.textContent = game.timer;
@@ -1674,7 +1532,6 @@
                     endGame();
                 }
 
-                // Timer warning
                 if (game.timer <= 10) {
                     timerDisplay.style.color = 'var(--damage-red)';
                     timerDisplay.style.animation = 'timerPulse 0.5s ease-in-out infinite';
@@ -1719,14 +1576,12 @@
             }
         }
 
-        // Input handling
         document.addEventListener('keydown', (e) => {
             const key = e.key.toLowerCase();
             keys[key] = true;
             
             if (!game.active) return;
 
-            // Player 1 actions (Arrow keys)
             if (e.key === ' ' || e.key === 'Spacebar') {
                 e.preventDefault();
                 attack(game.player1, player1El, game.player2, 'punch');
@@ -1741,7 +1596,6 @@
                 player1El.classList.add('blocking');
             }
 
-            // Jump
             if (e.key === 'ArrowUp' && !game.player1.isJumping) {
                 e.preventDefault();
                 jump(game.player1, player1El);
@@ -1787,21 +1641,16 @@
                 
                 defender.health = Math.max(0, defender.health - actualDamage);
                 
-                // Update health bar - simply set width percentage
                 if (defender === game.player1) {
                     p1Health.style.width = defender.health + '%';
-                    console.log('P1 Health:', defender.health, 'Width:', p1Health.style.width);
                 } else {
                     p2Health.style.width = defender.health + '%';
-                    console.log('P2 Health:', defender.health, 'Width:', p2Health.style.width);
                 }
                 
-                // Hit effect
                 const defenderEl = defender === game.player1 ? player1El : player2El;
                 defenderEl.classList.add('hit');
                 setTimeout(() => defenderEl.classList.remove('hit'), 200);
                 
-                // Combo
                 if (!defender.isBlocking) {
                     attacker.combo++;
                     if (attacker.combo > 1) {
@@ -1811,10 +1660,8 @@
                     attacker.combo = 0;
                 }
 
-                // Particles
                 createHitParticles(defender === game.player1 ? player1El : player2El);
                 
-                // Check for KO
                 if (defender.health <= 0) {
                     endGame();
                 }
@@ -1858,21 +1705,15 @@
 
             const speed = 5;
 
-            // Player 1 movement (Arrow keys)
             if (keys['arrowleft'] && game.player1.x > 0) {
                 game.player1.x -= speed;
             }
             if (keys['arrowright'] && game.player1.x < window.innerWidth - 100) {
                 game.player1.x += speed;
             }
-            if (keys['arrowdown']) {
-                // Optional crouch or dodge
-            }
 
-            // AI Logic for Player 2
             updateAI();
 
-            // Update positions
             player1El.style.left = game.player1.x + 'px';
             player2El.style.left = game.player2.x + 'px';
 
@@ -1883,28 +1724,22 @@
             const distance = Math.abs(game.player1.x - game.player2.x);
             const now = Date.now();
 
-            // AI decision making
             if (now > ai.nextAction) {
-                ai.actionDelay = 300 + Math.random() * 700; // Random delay between actions
+                ai.actionDelay = 300 + Math.random() * 700;
                 ai.nextAction = now + ai.actionDelay;
 
-                // Decide AI behavior based on distance and health
                 if (distance > 150) {
-                    // Too far - move closer
                     ai.state = 'moving';
                 } else if (distance < 80) {
-                    // Too close - maybe back up or attack
                     if (Math.random() < 0.7) {
                         ai.state = 'attacking';
                     } else {
                         ai.state = 'backing';
                     }
                 } else {
-                    // Perfect range - attack or defend
                     const healthRatio = game.player2.health / 100;
                     
                     if (healthRatio < 0.3 && Math.random() < 0.5) {
-                        // Low health - more defensive
                         ai.state = 'defending';
                     } else if (Math.random() < ai.difficulty) {
                         ai.state = 'attacking';
@@ -1914,12 +1749,10 @@
                 }
             }
 
-            // Execute AI state
             const aiSpeed = 4;
             
             switch(ai.state) {
                 case 'moving':
-                    // Move toward player
                     if (game.player2.x > game.player1.x + 100) {
                         game.player2.x -= aiSpeed;
                     } else if (game.player2.x < game.player1.x - 100) {
@@ -1928,7 +1761,6 @@
                     break;
                     
                 case 'backing':
-                    // Move away from player
                     if (game.player2.x > game.player1.x) {
                         game.player2.x += aiSpeed;
                     } else {
@@ -1937,19 +1769,16 @@
                     break;
                     
                 case 'attacking':
-                    // Attack
                     const attackType = Math.random() < 0.6 ? 'punch' : 'kick';
                     attack(game.player2, player2El, game.player1, attackType);
                     ai.state = 'idle';
                     
-                    // Sometimes jump while attacking
                     if (Math.random() < 0.2 && !game.player2.isJumping) {
                         jump(game.player2, player2El);
                     }
                     break;
                     
                 case 'defending':
-                    // Block
                     if (!game.player2.isBlocking) {
                         game.player2.isBlocking = true;
                         player2El.classList.add('blocking');
@@ -1962,7 +1791,6 @@
                     break;
             }
 
-            // Keep AI in bounds
             if (game.player2.x < 0) game.player2.x = 0;
             if (game.player2.x > window.innerWidth - 100) game.player2.x = window.innerWidth - 100;
         }
