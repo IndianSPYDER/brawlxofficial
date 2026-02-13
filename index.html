@@ -215,6 +215,7 @@
             background: radial-gradient(ellipse at center, rgba(255,0,255,0.1) 0%, rgba(0,0,0,0.9) 100%);
             z-index: 100;
             animation: pulseGlow 2s ease-in-out infinite;
+            padding: 2rem;
         }
 
         @keyframes pulseGlow {
@@ -250,25 +251,35 @@
             animation: flicker 2s linear infinite;
         }
 
+        .button-divider {
+            width: 300px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            margin-top: 2rem;
+            opacity: 0.3;
+        }
+
         @keyframes flicker {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.8; }
         }
 
         #start-btn {
-            margin-top: 3rem;
-            padding: 1.5rem 4rem;
+            margin-top: 3.5rem;
+            margin-bottom: 2rem;
+            padding: 1.8rem 5rem;
             font-family: 'Black Ops One', cursive;
-            font-size: 2rem;
+            font-size: 2.5rem;
             background: transparent;
             color: var(--neon-magenta);
-            border: 3px solid var(--neon-magenta);
+            border: 4px solid var(--neon-magenta);
             cursor: pointer;
             position: relative;
             overflow: hidden;
             transition: all 0.3s;
             text-transform: uppercase;
-            letter-spacing: 0.3rem;
+            letter-spacing: 0.4rem;
+            box-shadow: 0 0 30px rgba(255,0,255,0.3);
         }
 
         #start-btn::before {
@@ -291,15 +302,15 @@
 
         #start-btn:hover {
             color: var(--dark-bg);
-            box-shadow: 0 0 20px var(--neon-magenta), 0 0 40px var(--neon-magenta);
-            transform: scale(1.05);
+            box-shadow: 0 0 40px var(--neon-magenta), 0 0 80px var(--neon-magenta);
+            transform: scale(1.08);
         }
 
         #coming-soon-btn {
-            margin-top: 1.5rem;
-            padding: 1rem 3rem;
+            margin-top: 0.8rem;
+            padding: 1rem 3.5rem;
             font-family: 'Orbitron', monospace;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             background: transparent;
             color: var(--neon-cyan);
             border: 2px solid var(--neon-cyan);
@@ -308,7 +319,7 @@
             overflow: hidden;
             transition: all 0.3s;
             text-transform: uppercase;
-            letter-spacing: 0.2rem;
+            letter-spacing: 0.15rem;
         }
 
         #coming-soon-btn:hover {
@@ -319,10 +330,10 @@
         }
 
         #admin-btn {
-            margin-top: 1.5rem;
-            padding: 0.8rem 2.5rem;
+            margin-top: 2.5rem;
+            padding: 0.7rem 2rem;
             font-family: 'Orbitron', monospace;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             background: transparent;
             color: var(--damage-red);
             border: 2px solid var(--damage-red);
@@ -331,13 +342,38 @@
             overflow: hidden;
             transition: all 0.3s;
             text-transform: uppercase;
-            letter-spacing: 0.2rem;
+            letter-spacing: 0.1rem;
+            opacity: 0.7;
         }
 
         #admin-btn:hover {
             background: var(--damage-red);
             color: var(--dark-bg);
             box-shadow: 0 0 20px var(--damage-red);
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        #shop-btn {
+            margin-top: 0;
+            padding: 1rem 3.5rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            background: transparent;
+            color: var(--neon-yellow);
+            border: 2px solid var(--neon-yellow);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.15rem;
+        }
+
+        #shop-btn:hover {
+            background: var(--neon-yellow);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-yellow);
             transform: scale(1.05);
         }
 
@@ -354,6 +390,158 @@
             align-items: center;
             z-index: 2000;
             animation: fadeIn 0.3s;
+        }
+
+        /* Shop Modal */
+        #shop-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s;
+        }
+
+        .shop-content {
+            background: rgba(0,0,0,0.95);
+            border: 3px solid var(--neon-yellow);
+            padding: 2rem 3rem;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 0 50px rgba(255,255,0,0.5);
+            position: relative;
+        }
+
+        .shop-content h2 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 20px var(--neon-yellow);
+        }
+
+        .shop-currency {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            margin-bottom: 2rem;
+            font-weight: 900;
+        }
+
+        .shop-currency span {
+            color: var(--neon-yellow);
+            text-shadow: 0 0 10px var(--neon-yellow);
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .shop-item {
+            background: rgba(0,0,0,0.7);
+            border: 2px solid var(--neon-cyan);
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .shop-item:hover {
+            border-color: var(--neon-yellow);
+            box-shadow: 0 0 20px rgba(255,255,0,0.3);
+            transform: translateY(-5px);
+        }
+
+        .shop-item.owned {
+            border-color: var(--health-green);
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .shop-item.owned:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .shop-item-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .shop-item-name {
+            font-family: 'Black Ops One', cursive;
+            font-size: 1.3rem;
+            color: var(--neon-cyan);
+            text-align: center;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .shop-item-desc {
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        .shop-item-price {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--neon-yellow);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .shop-buy-btn {
+            width: 100%;
+            padding: 0.8rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--neon-yellow);
+            border: 2px solid var(--neon-yellow);
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .shop-buy-btn:hover {
+            background: var(--neon-yellow);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px var(--neon-yellow);
+        }
+
+        .shop-buy-btn.owned-btn {
+            background: var(--health-green);
+            color: var(--dark-bg);
+            border-color: var(--health-green);
+            cursor: default;
+        }
+
+        .shop-buy-btn.owned-btn:hover {
+            box-shadow: none;
+        }
+
+        .shop-category {
+            font-family: 'Black Ops One', cursive;
+            font-size: 1.8rem;
+            color: var(--neon-magenta);
+            text-transform: uppercase;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px var(--neon-magenta);
         }
 
         @keyframes fadeIn {
@@ -593,6 +781,7 @@
 
         #player2 {
             right: 100px;
+            transform: scaleX(-1);
         }
 
         .fighter-body {
@@ -1454,6 +1643,11 @@
                     <div class="feature-date">Expected: End of February 2026</div>
                 </li>
                 <li class="feature-item">
+                    <div class="feature-title">🛒 SHOP SYSTEM</div>
+                    <div class="feature-desc">Purchase character skins, emotes, victory animations, and power-ups with in-game currency</div>
+                    <div class="feature-date">Expected: End of February 2026</div>
+                </li>
+                <li class="feature-item">
                     <div class="feature-title">🎮 Multiplayer Mode</div>
                     <div class="feature-desc">Battle your friends online in real-time PvP matches with ranked leaderboards</div>
                     <div class="feature-date">Expected: March 2026</div>
@@ -1479,6 +1673,25 @@
                     <div class="feature-date">Expected: July 2026</div>
                 </li>
             </ul>
+        </div>
+    </div>
+
+    <!-- Shop Modal -->
+    <div id="shop-modal">
+        <div class="shop-content">
+            <button class="close-modal" id="close-shop-modal">×</button>
+            <h2>⚡ BATTLE SHOP ⚡</h2>
+            <div class="shop-currency">COINS: <span id="player-coins">1000</span> 💰</div>
+
+            <div class="shop-category">🔥 COMBAT BOOSTS</div>
+            <div class="shop-grid" id="boosts-grid">
+                <!-- Boosts will be generated here -->
+            </div>
+
+            <div class="shop-category">⚔️ PERMANENT UPGRADES</div>
+            <div class="shop-grid" id="upgrades-grid">
+                <!-- Upgrades will be generated here -->
+            </div>
         </div>
     </div>
 
@@ -1555,7 +1768,9 @@
             <h1>BRAWL X</h1>
             <div class="subtitle">Ultimate Street Fighter</div>
             <button id="start-btn">Start Fight</button>
+            <button id="shop-btn">Shop</button>
             <button id="coming-soon-btn">What's Coming</button>
+            <div class="button-divider"></div>
             <button id="admin-btn">Admin Commands + Admin Abuse Times</button>
         </div>
 
@@ -1663,6 +1878,83 @@
     </div>
 
     <script>
+        // Shop System
+        let playerCoins = 1000;
+        let ownedItems = [];
+        let activeBoosts = {
+            damageBoost: false,
+            speedBoost: false,
+            shieldBoost: false,
+            rage: false
+        };
+
+        const shopItems = {
+            boosts: [
+                {
+                    id: 'damage_boost',
+                    name: 'Damage Boost',
+                    icon: '💥',
+                    description: '+50% damage for this match',
+                    price: 100,
+                    type: 'boost',
+                    effect: 'damageBoost'
+                },
+                {
+                    id: 'speed_boost',
+                    name: 'Speed Boost',
+                    icon: '⚡',
+                    description: '+40% movement speed for this match',
+                    price: 150,
+                    type: 'boost',
+                    effect: 'speedBoost'
+                },
+                {
+                    id: 'shield_boost',
+                    name: 'Shield Boost',
+                    icon: '🛡️',
+                    description: 'Block takes 0 damage for this match',
+                    price: 200,
+                    type: 'boost',
+                    effect: 'shieldBoost'
+                },
+                {
+                    id: 'rage_mode',
+                    name: 'Rage Mode',
+                    icon: '😤',
+                    description: 'Double damage + faster attacks for 20 seconds',
+                    price: 250,
+                    type: 'boost',
+                    effect: 'rage'
+                }
+            ],
+            upgrades: [
+                {
+                    id: 'health_upgrade',
+                    name: 'Max Health +20',
+                    icon: '❤️',
+                    description: 'Permanent +20 max health',
+                    price: 500,
+                    type: 'permanent'
+                },
+                {
+                    id: 'combo_master',
+                    name: 'Combo Master',
+                    icon: '🎯',
+                    description: 'Combos deal 25% more damage',
+                    price: 600,
+                    type: 'permanent'
+                },
+                {
+                    id: 'no_cooldown',
+                    name: 'Quick Hands',
+                    icon: '👊',
+                    description: 'Reduce attack cooldown by 50%',
+                    price: 700,
+                    type: 'permanent'
+                }
+            ]
+        };
+
         // Device Selection
         let isMobile = false;
         const deviceSelection = document.getElementById('device-selection');
@@ -1719,20 +2011,43 @@
 
         // Coming Soon Modal
         const comingSoonBtn = document.getElementById('coming-soon-btn');
+        const shopBtn = document.getElementById('shop-btn');
         const comingSoonModal = document.getElementById('coming-soon-modal');
         const closeModal = document.getElementById('close-modal');
 
+        // Shop Modal
+        const shopModal = document.getElementById('shop-modal');
+        const closeShopModal = document.getElementById('close-shop-modal');
+        const playerCoinsDisplay = document.getElementById('player-coins');
+        const boostsGrid = document.getElementById('boosts-grid');
+        const upgradesGrid = document.getElementById('upgrades-grid');
+
         comingSoonBtn.addEventListener('click', () => {
             comingSoonModal.style.display = 'flex';
+        });
+
+        shopBtn.addEventListener('click', () => {
+            shopModal.style.display = 'flex';
+            renderShop();
         });
 
         closeModal.addEventListener('click', () => {
             comingSoonModal.style.display = 'none';
         });
 
+        closeShopModal.addEventListener('click', () => {
+            shopModal.style.display = 'none';
+        });
+
         comingSoonModal.addEventListener('click', (e) => {
             if (e.target === comingSoonModal) {
                 comingSoonModal.style.display = 'none';
+            }
+        });
+
+        shopModal.addEventListener('click', (e) => {
+            if (e.target === shopModal) {
+                shopModal.style.display = 'none';
             }
         });
 
@@ -1839,13 +2154,117 @@
             adminOutput.appendChild(line);
         }
 
-        // Check if user is already logged in
+        // Shop Functions
+        function renderShop() {
+            playerCoinsDisplay.textContent = playerCoins;
+            
+            // Render boosts
+            boostsGrid.innerHTML = '';
+            shopItems.boosts.forEach(item => {
+                const itemEl = createShopItem(item);
+                boostsGrid.appendChild(itemEl);
+            });
+
+            // Render upgrades
+            upgradesGrid.innerHTML = '';
+            shopItems.upgrades.forEach(item => {
+                const itemEl = createShopItem(item);
+                upgradesGrid.appendChild(itemEl);
+            });
+        }
+
+        function createShopItem(item) {
+            const div = document.createElement('div');
+            div.className = 'shop-item';
+            const owned = ownedItems.includes(item.id);
+            if (owned) div.classList.add('owned');
+
+            div.innerHTML = `
+                <div class="shop-item-icon">${item.icon}</div>
+                <div class="shop-item-name">${item.name}</div>
+                <div class="shop-item-desc">${item.description}</div>
+                <div class="shop-item-price">${owned ? 'OWNED' : item.price + ' 💰'}</div>
+                <button class="shop-buy-btn ${owned ? 'owned-btn' : ''}" data-item-id="${item.id}">
+                    ${owned ? 'OWNED' : 'BUY'}
+                </button>
+            `;
+
+            const buyBtn = div.querySelector('.shop-buy-btn');
+            if (!owned) {
+                buyBtn.addEventListener('click', () => purchaseItem(item));
+            }
+
+            return div;
+        }
+
+        function purchaseItem(item) {
+            if (playerCoins >= item.price) {
+                playerCoins -= item.price;
+                
+                if (item.type === 'permanent') {
+                    ownedItems.push(item.id);
+                    applyPermanentUpgrade(item.id);
+                } else if (item.type === 'boost') {
+                    activeBoosts[item.effect] = true;
+                }
+                
+                localStorage.setItem('brawlx_coins', playerCoins);
+                localStorage.setItem('brawlx_owned', JSON.stringify(ownedItems));
+                
+                renderShop();
+                showNotification(`Purchased ${item.name}!`, 'success');
+            } else {
+                showNotification('Not enough coins!', 'error');
+            }
+        }
+
+        function applyPermanentUpgrade(upgradeId) {
+            if (upgradeId === 'health_upgrade') {
+                game.player1.maxHealth = 120;
+            } else if (upgradeId === 'combo_master') {
+                game.player1.comboMultiplier = 1.25;
+            } else if (upgradeId === 'no_cooldown') {
+                game.player1.cooldownReduction = 0.5;
+            }
+        }
+
+        function showNotification(message, type) {
+            const notif = document.createElement('div');
+            notif.style.position = 'fixed';
+            notif.style.top = '100px';
+            notif.style.right = '20px';
+            notif.style.padding = '1rem 2rem';
+            notif.style.background = type === 'success' ? 'var(--health-green)' : 'var(--damage-red)';
+            notif.style.color = 'var(--dark-bg)';
+            notif.style.fontFamily = "'Orbitron', monospace";
+            notif.style.fontWeight = '900';
+            notif.style.fontSize = '1.2rem';
+            notif.style.border = '2px solid currentColor';
+            notif.style.zIndex = '10000';
+            notif.style.animation = 'slideIn 0.3s ease-out';
+            notif.textContent = message;
+            document.body.appendChild(notif);
+
+            setTimeout(() => {
+                notif.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => notif.remove(), 300);
+            }, 2000);
+        }
+
+        // Load saved data
         window.addEventListener('load', () => {
             const savedUser = localStorage.getItem('brawlx_current_user');
             if (savedUser) {
                 currentUser = savedUser;
                 showGame();
             }
+
+            // Load shop data
+            const savedCoins = localStorage.getItem('brawlx_coins');
+            if (savedCoins) playerCoins = parseInt(savedCoins);
+            
+            const savedOwned = localStorage.getItem('brawlx_owned');
+            if (savedOwned) ownedItems = JSON.parse(savedOwned);
         });
 
         // Toggle between login and signup
@@ -1943,12 +2362,15 @@
                 x: 100,
                 y: 100,
                 health: 100,
+                maxHealth: 100,
                 isBlocking: false,
                 combo: 0,
                 isJumping: false,
                 velocityY: 0,
                 punchCooldown: false,
-                kickCooldown: false
+                kickCooldown: false,
+                comboMultiplier: 1,
+                cooldownReduction: 0
             },
             player2: {
                 x: window.innerWidth - 180,
@@ -2089,6 +2511,18 @@
             welcomeUser.style.display = 'none';
             game.active = true;
             
+            // Apply permanent upgrades
+            if (ownedItems.includes('health_upgrade')) {
+                game.player1.maxHealth = 120;
+                game.player1.health = 120;
+            }
+            if (ownedItems.includes('combo_master')) {
+                game.player1.comboMultiplier = 1.25;
+            }
+            if (ownedItems.includes('no_cooldown')) {
+                game.player1.cooldownReduction = 0.5;
+            }
+            
             // Set AI difficulty based on selection
             setAIDifficulty();
             
@@ -2221,6 +2655,7 @@
                 // Set punch cooldown for player1
                 if (attacker === game.player1) {
                     attacker.punchCooldown = true;
+                    const cooldownTime = 500 * (1 - attacker.cooldownReduction);
                     if (isMobile) {
                         mobilePunchBtn.classList.add('cooldown', 'recharging');
                     }
@@ -2229,7 +2664,7 @@
                         if (isMobile) {
                             mobilePunchBtn.classList.remove('cooldown', 'recharging');
                         }
-                    }, 500);
+                    }, cooldownTime);
                 }
             } else {
                 attackerEl.classList.add('kicking');
@@ -2238,6 +2673,7 @@
                 // Set kick cooldown for player1
                 if (attacker === game.player1) {
                     attacker.kickCooldown = true;
+                    const cooldownTime = 500 * (1 - attacker.cooldownReduction);
                     if (isMobile) {
                         mobileKickBtn.classList.add('cooldown', 'recharging');
                     }
@@ -2246,18 +2682,44 @@
                         if (isMobile) {
                             mobileKickBtn.classList.remove('cooldown', 'recharging');
                         }
-                    }, 500);
+                    }, cooldownTime);
                 }
             }
 
             if (distance < hitRange) {
-                const damage = type === 'kick' ? 8 : 5;
-                const actualDamage = defender.isBlocking ? damage * 0.3 : damage;
+                let damage = type === 'kick' ? 8 : 5;
+                
+                // Apply damage boost
+                if (attacker === game.player1 && activeBoosts.damageBoost) {
+                    damage *= 1.5;
+                }
+                
+                // Apply rage mode
+                if (attacker === game.player1 && activeBoosts.rage) {
+                    damage *= 2;
+                }
+                
+                // Apply combo multiplier
+                if (attacker === game.player1 && attacker.combo > 1) {
+                    damage *= attacker.comboMultiplier;
+                }
+                
+                // Apply shield boost
+                let actualDamage = damage;
+                if (defender.isBlocking) {
+                    if (defender === game.player1 && activeBoosts.shieldBoost) {
+                        actualDamage = 0;
+                    } else {
+                        actualDamage = damage * 0.3;
+                    }
+                } else {
+                    actualDamage = damage;
+                }
                 
                 defender.health = Math.max(0, defender.health - actualDamage);
                 
                 if (defender === game.player1) {
-                    p1Health.style.width = defender.health + '%';
+                    p1Health.style.width = (defender.health / game.player1.maxHealth * 100) + '%';
                 } else {
                     p2Health.style.width = defender.health + '%';
                 }
@@ -2318,7 +2780,12 @@
         function gameLoop() {
             if (!game.active) return;
 
-            const speed = 5;
+            let speed = 5;
+            
+            // Apply speed boost
+            if (activeBoosts.speedBoost) {
+                speed *= 1.4;
+            }
 
             if (keys['arrowleft'] && game.player1.x > 0) {
                 game.player1.x -= speed;
@@ -2416,18 +2883,41 @@
             game.timerInterval = null;
             
             let winner;
+            let coinsEarned = 0;
+            
+            // Base coins depend on difficulty
+            let baseBounty = 100; // Easy
+            if (selectedDifficulty === 'normal') {
+                baseBounty = 150;
+            } else if (selectedDifficulty === 'medium') {
+                baseBounty = 200;
+            }
+            
             if (game.player1.health > game.player2.health) {
                 winner = 'YOU WIN!';
                 winnerText.style.color = 'var(--neon-cyan)';
+                coinsEarned = baseBounty; // Full bounty
             } else if (game.player2.health > game.player1.health) {
                 winner = 'AI WINS!';
                 winnerText.style.color = 'var(--neon-magenta)';
+                coinsEarned = Math.floor(baseBounty * 0.25); // 25% of bounty
             } else {
                 winner = 'DRAW!';
                 winnerText.style.color = 'var(--neon-yellow)';
+                coinsEarned = Math.floor(baseBounty * 0.5); // 50% of bounty
             }
             
-            winnerText.textContent = winner;
+            // Award coins
+            playerCoins += coinsEarned;
+            localStorage.setItem('brawlx_coins', playerCoins);
+            
+            // Reset boosts (they only last one match)
+            activeBoosts.damageBoost = false;
+            activeBoosts.speedBoost = false;
+            activeBoosts.shieldBoost = false;
+            activeBoosts.rage = false;
+            
+            winnerText.textContent = winner + ` (+${coinsEarned} 💰 Bounty)`;
             gameOver.style.display = 'block';
         }
 
