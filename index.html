@@ -377,6 +377,75 @@
             transform: scale(1.05);
         }
 
+        /* Other Modes Button - Extra Cool */
+        #modes-btn {
+            margin-top: 0.8rem;
+            padding: 1.2rem 4rem;
+            font-family: 'Black Ops One', cursive;
+            font-size: 1.4rem;
+            background: linear-gradient(45deg, rgba(255,0,255,0.1), rgba(0,255,255,0.1));
+            color: var(--neon-cyan);
+            border: 3px solid var(--neon-cyan);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            box-shadow: 0 0 20px rgba(0,255,255,0.3), inset 0 0 20px rgba(0,255,255,0.1);
+            animation: modesGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes modesGlow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(0,255,255,0.3), inset 0 0 20px rgba(0,255,255,0.1);
+                border-color: var(--neon-cyan);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(255,0,255,0.5), inset 0 0 30px rgba(255,0,255,0.2);
+                border-color: var(--neon-magenta);
+            }
+        }
+
+        #modes-btn::before {
+            content: '🎮';
+            position: absolute;
+            left: 1rem;
+            font-size: 1.5rem;
+            animation: buttonIconBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes buttonIconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        #modes-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+            z-index: -1;
+            border-radius: 10px;
+        }
+
+        #modes-btn:hover::after {
+            width: 110%;
+            height: 110%;
+        }
+
+        #modes-btn:hover {
+            color: var(--dark-bg);
+            transform: scale(1.08) rotate(-1deg);
+            box-shadow: 0 0 50px var(--neon-cyan), 0 0 80px var(--neon-magenta);
+            border-color: var(--neon-yellow);
+        }
+
         /* Coming Soon Modal */
         #coming-soon-modal {
             position: fixed;
@@ -1435,6 +1504,389 @@
             pointer-events: none;
         }
 
+        /* Modes Menu */
+        #modes-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 1vh;
+            z-index: 150;
+            animation: fadeIn 0.3s;
+            overflow-y: auto;
+        }
+
+        .modes-container {
+            background: rgba(0,0,0,0.9);
+            border: 3px solid var(--neon-cyan);
+            padding: 2rem 3rem;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0,255,255,0.5);
+            max-width: 900px;
+            margin-bottom: 2rem;
+        }
+
+        .modes-container h2 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-card {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid var(--neon-cyan);
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0,255,255,0.5);
+            border-color: var(--neon-magenta);
+        }
+
+        .mode-card-title {
+            font-family: 'Black Ops One', cursive;
+            font-size: 1.3rem;
+            color: var(--neon-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .mode-card-desc {
+            color: var(--neon-cyan);
+            opacity: 0.8;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+        }
+
+        .mode-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .close-modes-btn {
+            padding: 1rem 2rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--neon-magenta);
+            border: 2px solid var(--neon-magenta);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-modes-btn:hover {
+            background: var(--neon-magenta);
+            color: var(--dark-bg);
+        }
+
+        /* Difficulty Selection Modal */
+        #difficulty-select-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            animation: fadeIn 0.3s;
+        }
+
+        .difficulty-select-container {
+            background: rgba(0,0,0,0.9);
+            border: 3px solid var(--neon-magenta);
+            padding: 3rem 4rem;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255,0,255,0.5);
+            min-width: 400px;
+        }
+
+        .difficulty-select-container h2 {
+            font-family: 'Black Ops One', cursive;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--neon-magenta), var(--neon-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .difficulty-select-container h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            color: var(--neon-cyan);
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .difficulty-select-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .difficulty-select-btn {
+            padding: 1.2rem 2rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            background: transparent;
+            border: 2px solid;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.15rem;
+            position: relative;
+        }
+
+        .difficulty-select-btn.easy {
+            color: var(--health-green);
+            border-color: var(--health-green);
+        }
+
+        .difficulty-select-btn.easy:hover {
+            background: var(--health-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--health-green);
+            transform: scale(1.05);
+        }
+
+        .difficulty-select-btn.medium {
+            color: var(--neon-yellow);
+            border-color: var(--neon-yellow);
+        }
+
+        .difficulty-select-btn.medium:hover {
+            background: var(--neon-yellow);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-yellow);
+            transform: scale(1.05);
+        }
+
+        .difficulty-select-btn.hard {
+            color: var(--damage-red);
+            border-color: var(--damage-red);
+        }
+
+        .difficulty-select-btn.hard:hover {
+            background: var(--damage-red);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--damage-red);
+            transform: scale(1.05);
+        }
+
+        .cancel-difficulty-btn {
+            padding: 0.8rem 2rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cancel-difficulty-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+        }
+
+        /* Survival Mode Styles */
+        #survival-mode {
+            display: none;
+        }
+
+        .wave-counter {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Black Ops One', cursive;
+            font-size: 5rem;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 30px var(--neon-yellow);
+            z-index: 300;
+            pointer-events: none;
+        }
+
+        .survival-stats {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--neon-cyan);
+            padding: 1rem 2rem;
+            font-family: 'Orbitron', monospace;
+            z-index: 150;
+        }
+
+        /* Time Attack Styles */
+        #time-attack-mode {
+            display: none;
+        }
+
+        .time-attack-timer {
+            position: fixed;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Black Ops One', cursive;
+            font-size: 4rem;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 30px var(--neon-yellow);
+            z-index: 300;
+        }
+
+        .time-attack-score {
+            position: fixed;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--neon-cyan);
+            padding: 1rem 2rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--neon-cyan);
+            z-index: 150;
+        }
+
+        /* Boss Rush Styles */
+        #boss-rush-mode {
+            display: none;
+        }
+
+        .boss-health-bar {
+            position: fixed;
+            top: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 40px;
+            background: rgba(0,0,0,0.8);
+            border: 3px solid var(--damage-red);
+            padding: 5px;
+            z-index: 150;
+        }
+
+        .boss-health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--damage-red), var(--neon-magenta));
+            transition: width 0.3s;
+            box-shadow: 0 0 20px var(--damage-red);
+        }
+
+        .boss-name {
+            position: fixed;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Black Ops One', cursive;
+            font-size: 2rem;
+            color: var(--damage-red);
+            text-shadow: 0 0 20px var(--damage-red);
+            z-index: 150;
+        }
+
+        /* Target Practice Styles */
+        #target-practice-mode {
+            display: none;
+        }
+
+        .target {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, var(--damage-red), var(--neon-magenta));
+            border-radius: 50%;
+            border: 3px solid var(--neon-cyan);
+            cursor: crosshair;
+            animation: targetFloat 2s ease-in-out infinite;
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+
+        @keyframes targetFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .target::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: var(--dark-bg);
+            border-radius: 50%;
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .target::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .target-score {
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--neon-cyan);
+            padding: 1rem 2rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            z-index: 150;
+        }
+
+        .target-timer {
+            position: fixed;
+            top: 50px;
+            left: 50px;
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--neon-yellow);
+            padding: 1rem 2rem;
+            font-family: 'Black Ops One', cursive;
+            font-size: 2rem;
+            color: var(--neon-yellow);
+            z-index: 150;
+        }
+
+        /* Mobile Controls UI */
+
         .mobile-dpad {
             position: absolute;
             left: 40px;
@@ -1762,12 +2214,66 @@
     <!-- Global Message Banner -->
     <div id="global-message"></div>
 
+    <!-- Modes Menu -->
+    <div id="modes-menu">
+        <div class="modes-container">
+            <h2>OTHER GAME MODES</h2>
+            <div class="modes-grid">
+                <div class="mode-card" onclick="showDifficultySelect('survival')">
+                    <span class="mode-card-icon">🌊</span>
+                    <div class="mode-card-title">SURVIVAL</div>
+                    <div class="mode-card-desc">Fight endless waves of enemies. How long can you last?</div>
+                </div>
+                <div class="mode-card" onclick="showDifficultySelect('timeattack')">
+                    <span class="mode-card-icon">⚡</span>
+                    <div class="mode-card-title">TIME ATTACK</div>
+                    <div class="mode-card-desc">Defeat as many enemies as possible in 60 seconds!</div>
+                </div>
+                <div class="mode-card" onclick="showDifficultySelect('bossrush')">
+                    <span class="mode-card-icon">👹</span>
+                    <div class="mode-card-title">BOSS RUSH</div>
+                    <div class="mode-card-desc">Battle against super-powered boss enemies!</div>
+                </div>
+                <div class="mode-card" onclick="showDifficultySelect('targetpractice')">
+                    <span class="mode-card-icon">🎯</span>
+                    <div class="mode-card-title">TARGET PRACTICE</div>
+                    <div class="mode-card-desc">Hit moving targets to score points. Test your accuracy!</div>
+                </div>
+            </div>
+            <button class="close-modes-btn" onclick="closeModesMenu()">BACK TO MENU</button>
+        </div>
+    </div>
+
+    <!-- Difficulty Selection Modal -->
+    <div id="difficulty-select-modal">
+        <div class="difficulty-select-container">
+            <h2>SELECT DIFFICULTY</h2>
+            <h3 id="selected-mode-name"></h3>
+            <div class="difficulty-select-buttons">
+                <button class="difficulty-select-btn easy" onclick="startModeWithDifficulty('easy')">
+                    EASY
+                    <div style="font-size: 0.7rem; opacity: 0.7; margin-top: 0.3rem;">Casual gameplay</div>
+                </button>
+                <button class="difficulty-select-btn medium" onclick="startModeWithDifficulty('medium')">
+                    MEDIUM
+                    <div style="font-size: 0.7rem; opacity: 0.7; margin-top: 0.3rem;">Balanced challenge</div>
+                </button>
+                <button class="difficulty-select-btn hard" onclick="startModeWithDifficulty('hard')">
+                    HARD
+                    <div style="font-size: 0.7rem; opacity: 0.7; margin-top: 0.3rem;">Expert level</div>
+                </button>
+            </div>
+            <button class="cancel-difficulty-btn" onclick="closeDifficultySelect()">CANCEL</button>
+        </div>
+    </div>
+
     <div id="game-container">
         <!-- Title Screen -->
         <div id="title-screen">
             <h1>BRAWL X</h1>
             <div class="subtitle">Ultimate Street Fighter</div>
             <button id="start-btn">Start Fight</button>
+            <button id="modes-btn">Other Modes</button>
             <button id="shop-btn">Shop</button>
             <button id="coming-soon-btn">What's Coming</button>
             <div class="button-divider"></div>
@@ -2689,6 +3195,12 @@
             if (distance < hitRange) {
                 let damage = type === 'kick' ? 8 : 5;
                 
+                // Apply boss damage multiplier if AI is a boss
+                if (attacker === game.player2 && bossRushState.active) {
+                    const boss = bosses[bossRushState.currentBoss];
+                    damage *= boss.damage;
+                }
+                
                 // Apply damage boost
                 if (attacker === game.player1 && activeBoosts.damageBoost) {
                     damage *= 1.5;
@@ -2721,7 +3233,13 @@
                 if (defender === game.player1) {
                     p1Health.style.width = (defender.health / game.player1.maxHealth * 100) + '%';
                 } else {
-                    p2Health.style.width = defender.health + '%';
+                    // For boss rush, use percentage of max health
+                    if (bossRushState.active) {
+                        const boss = bosses[bossRushState.currentBoss];
+                        p2Health.style.width = (defender.health / boss.health * 100) + '%';
+                    } else {
+                        p2Health.style.width = defender.health + '%';
+                    }
                 }
                 
                 const defenderEl = defender === game.player1 ? player1El : player2El;
@@ -3012,6 +3530,595 @@
         mobileBlockBtn.addEventListener('touchend', handleBlockEnd);
         mobileBlockBtn.addEventListener('mouseup', handleBlockEnd);
         mobileBlockBtn.addEventListener('mouseleave', handleBlockEnd);
+
+        // ============================================
+        // ============================================
+        // NEW GAME MODES SYSTEM
+        // ============================================
+
+        const modesMenu = document.getElementById('modes-menu');
+        const modesBtn = document.getElementById('modes-btn');
+        const difficultyModal = document.getElementById('difficulty-select-modal');
+        let selectedGameMode = '';
+        let currentDifficulty = 'easy';
+
+        // Show modes menu
+        modesBtn.addEventListener('click', showModesMenu);
+
+        function showModesMenu() {
+            titleScreen.style.display = 'none';
+            modesMenu.style.display = 'flex';
+        }
+
+        function closeModesMenu() {
+            modesMenu.style.display = 'none';
+            titleScreen.style.display = 'flex';
+        }
+
+        // Difficulty selection
+        function showDifficultySelect(mode) {
+            selectedGameMode = mode;
+            modesMenu.style.display = 'none';
+            difficultyModal.style.display = 'flex';
+            
+            // Update mode name display
+            const modeNames = {
+                'survival': 'SURVIVAL MODE',
+                'timeattack': 'TIME ATTACK',
+                'bossrush': 'BOSS RUSH',
+                'targetpractice': 'TARGET PRACTICE'
+            };
+            document.getElementById('selected-mode-name').textContent = modeNames[mode];
+        }
+
+        function closeDifficultySelect() {
+            difficultyModal.style.display = 'none';
+            modesMenu.style.display = 'flex';
+        }
+
+        function startModeWithDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            difficultyModal.style.display = 'none';
+            
+            // Start the selected mode with chosen difficulty
+            switch(selectedGameMode) {
+                case 'survival':
+                    startSurvivalMode(difficulty);
+                    break;
+                case 'timeattack':
+                    startTimeAttack(difficulty);
+                    break;
+                case 'bossrush':
+                    startBossRush(difficulty);
+                    break;
+                case 'targetpractice':
+                    startTargetPractice(difficulty);
+                    break;
+            }
+        }
+
+        // ============================================
+        // SURVIVAL MODE - Endless wave of enemies
+        // ============================================
+        let survivalState = {
+            active: false,
+            wave: 1,
+            enemiesDefeated: 0,
+            totalScore: 0,
+            difficulty: 'easy'
+        };
+
+        function startSurvivalMode(difficulty = 'easy') {
+            modesMenu.style.display = 'none';
+            
+            // Create survival UI
+            const survivalUI = document.createElement('div');
+            survivalUI.id = 'survival-mode';
+            survivalUI.innerHTML = `
+                <div class="survival-stats">
+                    <div style="font-size: 1.5rem; color: var(--neon-yellow); margin-bottom: 0.5rem;">WAVE: <span id="wave-num">1</span></div>
+                    <div style="color: var(--neon-cyan);">Enemies Defeated: <span id="enemies-defeated">0</span></div>
+                    <div style="color: var(--neon-magenta);">Total Score: <span id="survival-score">0</span></div>
+                </div>
+                <div class="wave-counter" id="wave-announce" style="display: none;"></div>
+            `;
+            document.body.appendChild(survivalUI);
+
+            survivalState = { active: true, wave: 1, enemiesDefeated: 0, totalScore: 0, difficulty: difficulty };
+            
+            // Start first wave
+            startSurvivalWave();
+        }
+
+        function startSurvivalWave() {
+            const waveAnnounce = document.getElementById('wave-announce');
+            waveAnnounce.textContent = `WAVE ${survivalState.wave}`;
+            waveAnnounce.style.display = 'block';
+            
+            setTimeout(() => {
+                waveAnnounce.style.display = 'none';
+                startGame();
+                
+                // Difficulty multipliers
+                const difficultyMultipliers = {
+                    'easy': { aiBase: 0.3, speedBase: 900, healthMult: 5 },
+                    'medium': { aiBase: 0.5, speedBase: 700, healthMult: 10 },
+                    'hard': { aiBase: 0.7, speedBase: 500, healthMult: 15 }
+                };
+                
+                const mult = difficultyMultipliers[survivalState.difficulty];
+                
+                // Increase AI difficulty with waves
+                ai.difficulty = Math.min(0.95, mult.aiBase + (survivalState.wave * 0.05));
+                ai.reactionSpeed = Math.max(150, mult.speedBase - (survivalState.wave * 30));
+                
+                // Increase AI health for later waves
+                game.player2.health = 100 + (survivalState.wave * mult.healthMult);
+            }, 2000);
+        }
+
+        function completeSurvivalWave() {
+            survivalState.wave++;
+            survivalState.enemiesDefeated++;
+            survivalState.totalScore += (100 * survivalState.wave);
+            
+            // Update UI
+            document.getElementById('wave-num').textContent = survivalState.wave;
+            document.getElementById('enemies-defeated').textContent = survivalState.enemiesDefeated;
+            document.getElementById('survival-score').textContent = survivalState.totalScore;
+            
+            // Award coins
+            playerCoins += (50 * survivalState.wave);
+            localStorage.setItem('brawlx_coins', playerCoins);
+            updateCoinsDisplay();
+            
+            // Reset player health partially
+            game.player1.health = Math.min(100, game.player1.health + 30);
+            p1Health.style.width = game.player1.health + '%';
+            
+            // Start next wave
+            setTimeout(() => startSurvivalWave(), 2000);
+        }
+
+        function endSurvivalMode() {
+            survivalState.active = false;
+            const survivalUI = document.getElementById('survival-mode');
+            if (survivalUI) survivalUI.remove();
+            
+            alert(`SURVIVAL MODE COMPLETE!
+Waves Survived: ${survivalState.wave - 1}
+Enemies Defeated: ${survivalState.enemiesDefeated}
+Total Score: ${survivalState.totalScore}
+            
+Great job, warrior!`);
+            
+            titleScreen.style.display = 'flex';
+        }
+
+        // ============================================
+        // TIME ATTACK MODE - 60 second rush
+        // ============================================
+        let timeAttackState = {
+            active: false,
+            timeLeft: 60,
+            score: 0,
+            kills: 0,
+            timerInterval: null,
+            difficulty: 'easy'
+        };
+
+        function startTimeAttack(difficulty = 'easy') {
+            modesMenu.style.display = 'none';
+            
+            const timeAttackUI = document.createElement('div');
+            timeAttackUI.id = 'time-attack-mode';
+            timeAttackUI.innerHTML = `
+                <div class="time-attack-timer" id="time-attack-timer">60</div>
+                <div class="time-attack-score">
+                    SCORE: <span id="time-attack-score-val">0</span><br>
+                    KILLS: <span id="time-attack-kills">0</span>
+                </div>
+            `;
+            document.body.appendChild(timeAttackUI);
+
+            timeAttackState = { active: true, timeLeft: 60, score: 0, kills: 0, difficulty: difficulty };
+            
+            // Start countdown
+            const timerEl = document.getElementById('time-attack-timer');
+            timeAttackState.timerInterval = setInterval(() => {
+                timeAttackState.timeLeft--;
+                timerEl.textContent = timeAttackState.timeLeft;
+                
+                // Change color when low on time
+                if (timeAttackState.timeLeft <= 10) {
+                    timerEl.style.color = 'var(--damage-red)';
+                    timerEl.style.animation = 'pulseGlow 0.5s ease-in-out infinite';
+                }
+                
+                if (timeAttackState.timeLeft <= 0) {
+                    endTimeAttack();
+                }
+            }, 1000);
+            
+            startGame();
+            
+            // Difficulty settings
+            const difficultySettings = {
+                'easy': { aiDiff: 0.25, aiSpeed: 700, enemyHealth: 80 },
+                'medium': { aiDiff: 0.45, aiSpeed: 500, enemyHealth: 100 },
+                'hard': { aiDiff: 0.65, aiSpeed: 350, enemyHealth: 120 }
+            };
+            
+            const settings = difficultySettings[difficulty];
+            ai.difficulty = settings.aiDiff;
+            ai.reactionSpeed = settings.aiSpeed;
+            game.player2.health = settings.enemyHealth;
+        }
+
+        function timeAttackKill() {
+            timeAttackState.kills++;
+            
+            // Score varies by difficulty
+            const scoreMultipliers = { 'easy': 50, 'medium': 100, 'hard': 150 };
+            timeAttackState.score += scoreMultipliers[timeAttackState.difficulty];
+            
+            document.getElementById('time-attack-score-val').textContent = timeAttackState.score;
+            document.getElementById('time-attack-kills').textContent = timeAttackState.kills;
+            
+            // Quick respawn with difficulty-based health
+            const healthSettings = { 'easy': 80, 'medium': 100, 'hard': 120 };
+            game.player2.health = healthSettings[timeAttackState.difficulty];
+            p2Health.style.width = '100%';
+            game.player2.x = window.innerWidth - 200;
+        }
+
+        function endTimeAttack() {
+            clearInterval(timeAttackState.timerInterval);
+            timeAttackState.active = false;
+            game.active = false;
+            
+            const timeAttackUI = document.getElementById('time-attack-mode');
+            if (timeAttackUI) timeAttackUI.remove();
+            
+            // Award coins based on performance
+            const coinsEarned = timeAttackState.score;
+            playerCoins += coinsEarned;
+            localStorage.setItem('brawlx_coins', playerCoins);
+            updateCoinsDisplay();
+            
+            alert(`TIME ATTACK COMPLETE!
+            
+Score: ${timeAttackState.score}
+Enemies Defeated: ${timeAttackState.kills}
+Coins Earned: ${coinsEarned} 💰
+
+Amazing performance!`);
+            
+            titleScreen.style.display = 'flex';
+        }
+
+        // ============================================
+        // BOSS RUSH MODE - Fight super bosses
+        // ============================================
+        const bossTemplates = {
+            'easy': [
+                { name: 'IRON FIST', health: 150, damage: 1.2, speed: 1.0, color: '#888888' },
+                { name: 'SHADOW BLADE', health: 180, damage: 1.4, speed: 1.1, color: '#440088' },
+                { name: 'THUNDER GOD', health: 220, damage: 1.6, speed: 1.2, color: '#ffff00' },
+                { name: 'INFERNO KING', health: 280, damage: 1.8, speed: 1.3, color: '#ff0000' },
+                { name: 'COSMIC DESTROYER', health: 350, damage: 2.0, speed: 1.4, color: '#00ffff' }
+            ],
+            'medium': [
+                { name: 'IRON FIST', health: 200, damage: 1.5, speed: 1.2, color: '#888888' },
+                { name: 'SHADOW BLADE', health: 250, damage: 1.8, speed: 1.5, color: '#440088' },
+                { name: 'THUNDER GOD', health: 300, damage: 2.0, speed: 1.3, color: '#ffff00' },
+                { name: 'INFERNO KING', health: 400, damage: 2.5, speed: 1.1, color: '#ff0000' },
+                { name: 'COSMIC DESTROYER', health: 500, damage: 3.0, speed: 1.4, color: '#00ffff' }
+            ],
+            'hard': [
+                { name: 'IRON FIST', health: 280, damage: 2.0, speed: 1.4, color: '#888888' },
+                { name: 'SHADOW BLADE', health: 350, damage: 2.5, speed: 1.8, color: '#440088' },
+                { name: 'THUNDER GOD', health: 450, damage: 3.0, speed: 1.6, color: '#ffff00' },
+                { name: 'INFERNO KING', health: 600, damage: 3.5, speed: 1.3, color: '#ff0000' },
+                { name: 'COSMIC DESTROYER', health: 800, damage: 4.0, speed: 1.7, color: '#00ffff' }
+            ]
+        };
+
+        let bosses = [];
+        let bossRushState = {
+            active: false,
+            currentBoss: 0,
+            totalBossesDefeated: 0,
+            difficulty: 'easy'
+        };
+
+        function startBossRush(difficulty = 'easy') {
+            modesMenu.style.display = 'none';
+            
+            // Set bosses based on difficulty
+            bosses = bossTemplates[difficulty];
+            
+            const bossRushUI = document.createElement('div');
+            bossRushUI.id = 'boss-rush-mode';
+            bossRushUI.innerHTML = `
+                <div class="boss-name" id="boss-name"></div>
+                <div class="boss-health-bar">
+                    <div class="boss-health-fill" id="boss-health-fill"></div>
+                </div>
+            `;
+            document.body.appendChild(bossRushUI);
+
+            bossRushState = { active: true, currentBoss: 0, totalBossesDefeated: 0, difficulty: difficulty };
+            spawnBoss(0);
+        }
+
+        function spawnBoss(bossIndex) {
+            if (bossIndex >= bosses.length) {
+                completeBossRush();
+                return;
+            }
+            
+            const boss = bosses[bossIndex];
+            
+            // Show boss name
+            document.getElementById('boss-name').textContent = boss.name;
+            
+            // Start game with boss stats
+            startGame();
+            game.player2.health = boss.health;
+            game.player2.maxHealth = boss.health;
+            p2Health.style.width = '100%';
+            
+            // Update AI for boss - scales with difficulty
+            const difficultyAIBonus = { 'easy': 0.4, 'medium': 0.6, 'hard': 0.75 };
+            const difficultySpeedBonus = { 'easy': 600, 'medium': 500, 'hard': 350 };
+            
+            ai.difficulty = difficultyAIBonus[bossRushState.difficulty] + (bossIndex * 0.08);
+            ai.reactionSpeed = Math.max(100, difficultySpeedBonus[bossRushState.difficulty] - (bossIndex * 50));
+            
+            // Change player2 color
+            player2El.style.color = boss.color;
+            
+            // Update boss health bar
+            updateBossHealthBar();
+        }
+
+        function updateBossHealthBar() {
+            const boss = bosses[bossRushState.currentBoss];
+            const healthPercent = (game.player2.health / boss.health) * 100;
+            document.getElementById('boss-health-fill').style.width = healthPercent + '%';
+        }
+
+        function defeatBoss() {
+            bossRushState.totalBossesDefeated++;
+            
+            // Award big coins for boss defeat
+            const bossBonus = (bossRushState.currentBoss + 1) * 200;
+            playerCoins += bossBonus;
+            localStorage.setItem('brawlx_coins', playerCoins);
+            updateCoinsDisplay();
+            
+            // Heal player
+            game.player1.health = Math.min(100, game.player1.health + 50);
+            p1Health.style.width = game.player1.health + '%';
+            
+            bossRushState.currentBoss++;
+            
+            setTimeout(() => {
+                if (bossRushState.currentBoss < bosses.length) {
+                    spawnBoss(bossRushState.currentBoss);
+                } else {
+                    completeBossRush();
+                }
+            }, 2000);
+        }
+
+        function completeBossRush() {
+            bossRushState.active = false;
+            game.active = false;
+            
+            const bossRushUI = document.getElementById('boss-rush-mode');
+            if (bossRushUI) bossRushUI.remove();
+            
+            alert(`BOSS RUSH COMPLETE!
+            
+Bosses Defeated: ${bossRushState.totalBossesDefeated}
+
+You are a true champion!`);
+            
+            titleScreen.style.display = 'flex';
+        }
+
+        // ============================================
+        // TARGET PRACTICE MODE - Accuracy test
+        // ============================================
+        let targetPracticeState = {
+            active: false,
+            score: 0,
+            targets: [],
+            timeLeft: 60,
+            timerInterval: null,
+            spawnInterval: null,
+            difficulty: 'easy'
+        };
+
+        function startTargetPractice(difficulty = 'easy') {
+            modesMenu.style.display = 'none';
+            
+            const targetUI = document.createElement('div');
+            targetUI.id = 'target-practice-mode';
+            targetUI.innerHTML = `
+                <div class="target-timer" id="target-timer">60</div>
+                <div class="target-score">SCORE: <span id="target-score-val">0</span></div>
+                <div id="target-container"></div>
+            `;
+            document.body.appendChild(targetUI);
+
+            targetPracticeState = { active: true, score: 0, targets: [], timeLeft: 60, difficulty: difficulty };
+            
+            // Hide normal game elements
+            hud.style.display = 'none';
+            arena.style.display = 'none';
+            
+            // Start timer
+            const timerEl = document.getElementById('target-timer');
+            targetPracticeState.timerInterval = setInterval(() => {
+                targetPracticeState.timeLeft--;
+                timerEl.textContent = targetPracticeState.timeLeft;
+                
+                if (targetPracticeState.timeLeft <= 10) {
+                    timerEl.style.color = 'var(--damage-red)';
+                }
+                
+                if (targetPracticeState.timeLeft <= 0) {
+                    endTargetPractice();
+                }
+            }, 1000);
+            
+            // Difficulty settings for spawn rate
+            const spawnRates = { 'easy': 2000, 'medium': 1500, 'hard': 1000 };
+            
+            // Spawn targets
+            spawnTargets();
+            targetPracticeState.spawnInterval = setInterval(() => {
+                if (targetPracticeState.active) {
+                    spawnTargets();
+                }
+            }, spawnRates[difficulty]);
+        }
+
+        function spawnTargets() {
+            const container = document.getElementById('target-container');
+            if (!container) return;
+            
+            // Difficulty affects number of targets and lifetime
+            const targetCounts = { 'easy': [1, 2], 'medium': [1, 3], 'hard': [2, 4] };
+            const lifetimes = { 'easy': 3500, 'medium': 2500, 'hard': 1800 };
+            const targetSizes = { 'easy': 80, 'medium': 65, 'hard': 50 };
+            
+            const [minTargets, maxTargets] = targetCounts[targetPracticeState.difficulty];
+            const numTargets = Math.floor(Math.random() * (maxTargets - minTargets + 1)) + minTargets;
+            const lifetime = lifetimes[targetPracticeState.difficulty];
+            const size = targetSizes[targetPracticeState.difficulty];
+            
+            for (let i = 0; i < numTargets; i++) {
+                const target = document.createElement('div');
+                target.className = 'target';
+                target.style.width = size + 'px';
+                target.style.height = size + 'px';
+                target.style.left = Math.random() * (window.innerWidth - size - 20) + 10 + 'px';
+                target.style.top = Math.random() * (window.innerHeight - size - 100) + 50 + 'px';
+                
+                // Add click handler
+                target.addEventListener('click', () => hitTarget(target));
+                
+                container.appendChild(target);
+                targetPracticeState.targets.push(target);
+                
+                // Auto-remove based on difficulty
+                setTimeout(() => {
+                    if (target.parentNode) {
+                        target.remove();
+                        const index = targetPracticeState.targets.indexOf(target);
+                        if (index > -1) {
+                            targetPracticeState.targets.splice(index, 1);
+                        }
+                    }
+                }, lifetime);
+            }
+        }
+
+        function hitTarget(target) {
+            // Add hit animation
+            target.style.transform = 'scale(0)';
+            target.style.transition = 'transform 0.2s';
+            
+            // Score based on difficulty
+            const scoreValues = { 'easy': 10, 'medium': 15, 'hard': 25 };
+            targetPracticeState.score += scoreValues[targetPracticeState.difficulty];
+            document.getElementById('target-score-val').textContent = targetPracticeState.score;
+            
+            setTimeout(() => target.remove(), 200);
+            
+            // Remove from array
+            const index = targetPracticeState.targets.indexOf(target);
+            if (index > -1) {
+                targetPracticeState.targets.splice(index, 1);
+            }
+        }
+
+        function endTargetPractice() {
+            clearInterval(targetPracticeState.timerInterval);
+            clearInterval(targetPracticeState.spawnInterval);
+            targetPracticeState.active = false;
+            
+            // Clean up
+            const targetUI = document.getElementById('target-practice-mode');
+            if (targetUI) targetUI.remove();
+            
+            hud.style.display = 'block';
+            arena.style.display = 'block';
+            
+            // Award coins
+            const coinsEarned = targetPracticeState.score * 2;
+            playerCoins += coinsEarned;
+            localStorage.setItem('brawlx_coins', playerCoins);
+            updateCoinsDisplay();
+            
+            alert(`TARGET PRACTICE COMPLETE!
+            
+Score: ${targetPracticeState.score}
+Accuracy Rating: ${targetPracticeState.score > 300 ? 'EXPERT' : targetPracticeState.score > 200 ? 'SHARP SHOOTER' : targetPracticeState.score > 100 ? 'DECENT' : 'NEEDS PRACTICE'}
+Coins Earned: ${coinsEarned} 💰
+
+Keep practicing!`);
+            
+            titleScreen.style.display = 'flex';
+        }
+
+        // ============================================
+        // MODIFY EXISTING ENDGAME TO HANDLE MODES
+        // ============================================
+        const originalEndGame = endGame;
+        endGame = function() {
+            // Check if we're in a special mode
+            if (survivalState.active && game.player1.health <= 0) {
+                endSurvivalMode();
+                return;
+            } else if (survivalState.active && game.player2.health <= 0) {
+                completeSurvivalWave();
+                return;
+            }
+            
+            if (timeAttackState.active && game.player2.health <= 0) {
+                timeAttackKill();
+                return;
+            }
+            
+            if (bossRushState.active && game.player2.health <= 0) {
+                defeatBoss();
+                return;
+            } else if (bossRushState.active && game.player1.health <= 0) {
+                // Player died in boss rush
+                bossRushState.active = false;
+                const bossRushUI = document.getElementById('boss-rush-mode');
+                if (bossRushUI) bossRushUI.remove();
+                alert(`DEFEATED!
+
+You were defeated by ${bosses[bossRushState.currentBoss].name}
+Bosses Defeated: ${bossRushState.totalBossesDefeated}`);
+                titleScreen.style.display = 'flex';
+                return;
+            }
+            
+            // Also update boss health bar if in boss rush
+            if (bossRushState.active) {
+                updateBossHealthBar();
+            }
+            
+            // Otherwise call original endGame
+            originalEndGame();
+        };
     </script>
 </body>
 </html>
